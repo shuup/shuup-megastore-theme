@@ -1,0 +1,138 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans %}Base{% endtrans %}{% endblock %} &ndash; {{ request.shop.public_name }}</title>
+    {% block extrameta %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ static("shuup_megastore_theme/img/favicon.ico") }}?v2">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/style.css") }}">
+</head>
+<body>
+
+    {% if messages %}
+        <div class="message-wrapper">
+            {% for message in messages %}
+                <div class="container">
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="Scroll to top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+    {% include "shoop/front/includes/_navigation.jinja" %}
+
+    <nav class="offcanvas-nav">
+        <div class="offcanvas-search">
+            <div class="offcanvas-search-wrap">
+                <input type="text" class="offcanvas-search-input" placeholder="Search for...">
+                <button class="btn offcanvas-search-submit" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <ul>
+            {% set items_per_row = 4 %}
+            {% for c in shoop.general.get_root_categories() recursive %}
+            {% set children = c.get_children() %}
+
+            {% if c.level == 0 %}
+                {% set divider = (children|length / items_per_row)|round(0, "ceil")|int %}
+                {% if divider < items_per_row %}
+                    {% set divider = items_per_row %}
+                {% endif %}
+            {% endif %}
+
+            <li class="level-{{ c.level }} is-parent is-megamenu">
+                <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a><span class="toggle-icon"></span>
+                {% if children %}
+                {% if c.level == 0 %}
+                    <ul>
+                        {% for c in children %}
+                            <li class="level-{{ c.level }}"><a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <div class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {% include "shoop/front/includes/megamenu.jinja" with context %}
+                </div>
+                <div class="col-md-9">
+                    {% block banner %}{% endblock %}
+                    {% block breadcrumb %}{% endblock %}
+                    <main class="{% block extra_main_class %}{% endblock %}">
+                        {% block before_content_title %}{% endblock %}
+                        {% if self.content_title() %}
+                            <div class="page-header">
+                                <h1>{% block content_title %}{% endblock %}</h1>
+                            </div>
+                        {% endif %}
+                        <div class="page-content">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </main>
+                </div>
+            </div>
+        <div class="row">
+            {% block carousels %}{% endblock %}
+        </div>
+        </div>
+    <section class="social-media-lift">
+    <div class="container text-center">
+
+        {% placeholder "global_placeholder" global %}
+            {% row %}
+                {% plugin "social_media_links" %}
+                    topic = "Follow us!"
+                    text = "Find out about our best products and offers!"
+                    icon_size = "3x"
+                    alignment = "center"
+                    [links]
+                        [links.Twitter]
+                            url = "#"
+                            ordering = "1"
+                        [links.Instagram]
+                            url = "#"
+                            ordering = "2"
+                        [links.Youtube]
+                            url = "#"
+                            ordering = "3"
+                        [links.Facebook]
+                            url = "#"
+                            ordering = "4"
+                        [links.Pinterest]
+                            url = "#"
+                            ordering = "5"
+                {% endplugin %}
+            {% endrow %}
+        {% endplaceholder %}
+    </div>
+</section>
+
+        {% include "shoop/front/includes/_footer.jinja" %}
+    </div>
+
+    <script src="{{ static("shuup_megastore_theme/js/shuup_megastore_theme.js") }}"></script>
+    {% block extrajs %}{% endblock %}
+    {# Enable adding products to basket with ajax #}
+    {% include "shuup_megastore_theme/add_product_to_basket.jinja" %}
+</body>
+</html>

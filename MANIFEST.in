@@ -1,0 +1,4 @@
+include README.rst
+include LICENSE
+
+recursive-include shuup_megastore_theme *.ico *.png *.jinja *.js *.css

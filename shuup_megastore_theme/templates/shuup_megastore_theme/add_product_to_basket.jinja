@@ -1,0 +1,63 @@
+<div class="cart-indicator" id="cart-indicator">
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        <p>{% trans %}Product added to cart{% endtrans %}</p>
+    </div>
+    <div class="error-msg">
+        <i class="fa fa-warning"></i>
+        <p>{% trans %}There was an error adding the product to the shopping cart{% endtrans %}</p>
+    </div>
+</div>
+
+<script>
+    function updateNavigationBasket() {
+        $.ajax({
+            url: "{{ url('shoop:xtheme_extra_view', view='basket_partial') }}",
+            method: "GET",
+            success: function(basket_html) {
+                $("#navigation-basket-partial").html(basket_html);
+            }
+        });
+    }
+
+    // TODO: Show error message?
+    function handleError(cover) {
+        cover.addClass('error'); // change to error message
+        setTimeout(function() {
+            // Hide the error message and the modal
+            cover.removeClass("error in");
+        }, 2500);
+    }
+
+    function addToBasket(form) {
+        var cover = $("#cart-indicator");
+        cover.addClass("in");
+        $.ajax({
+            url: form.attr("action"),
+            method: "POST",
+            data: form.serializeArray(),
+            success: function(response) {
+                if(response.error) {
+                    handleError(cover);
+                    return;
+                }
+                updateNavigationBasket();
+                cover.addClass("success");
+                setTimeout(function() {
+                    // Hide the message
+                    cover.removeClass("success in"); // Hide the modal
+                }, 2500);
+            },
+            error: function() {
+                handleError(cover);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $("form.add-to-basket").on("submit", function(e) {
+            e.preventDefault();
+            addToBasket($(this));
+        });
+    });
+</script>

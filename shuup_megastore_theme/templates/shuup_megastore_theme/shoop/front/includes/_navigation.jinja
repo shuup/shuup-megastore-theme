@@ -1,0 +1,147 @@
+<nav class="navbar navbar-static-top site-nav" role="navigation">
+    <div class="top-nav">
+    <div class="container">
+        <ul class="nav-right">
+            {% if user.is_authenticated() %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i>
+                        <span class="hidden-xs">
+                        {% if user.first_name or user.last_name %}
+                            {{ user.get_full_name() }}
+                        {% else %}
+                            {{ user }}
+                        {% endif %}
+                        </span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ url("shoop:customer_edit") }}">
+                                <i class="fa fa-user fa-fw"></i> {% trans %}Edit account details{% endtrans %}
+                            </a>
+                        </li>
+                        {% if shoop.urls.has_url("shoop:personal-orders") %}
+                        <li>
+                            <a href="{{ url("shoop:personal-orders") }}">
+                                <i class="fa fa-list-alt fa-fw"></i>
+                                {% trans %}My orders{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <li><a href="{{ url("shoop_admin:dashboard") }}"><i class="fa fa-dashboard fa-fw"></i> {% trans %}Admin panel{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if shoop.urls.has_url("shoop:logout") %}
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url("shoop:logout") }}">
+                                <i class="fa fa-sign-out fa-fw"></i> {% trans %}Log out{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i> <span class="hidden-xs">{% trans %}Log in{% endtrans %}</span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu login" role="dropdown-menu">
+                        <li>
+                            <form role="form" method="post" action="{{ url("shoop:login") }}">
+                                {% csrf_token %}
+                                {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
+                                <input type="hidden" name="next" value="{{ next or request.path }}">
+                                <div class="form-group">
+                                    <label for="username">{% trans %}Username or email address{% endtrans %}</label>
+                                    <input type="text" name="username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{% trans %}Password{% endtrans %}</label>
+                                    <input type="password" name="password" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    {% trans %}Log in{% endtrans %}
+                                </button>
+                            </form>
+                        </li>
+                        <li class="divider"></li>
+                        {% if shoop.urls.has_url("shoop:recover_password") %}
+                        <li>
+                            <a href="{{ url("shoop:recover_password") }}">
+                                <i class="fa fa-question fa-fw"></i> {% trans %}Forgot your password?{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shoop.urls.has_url("shoop:registration_register") %}
+                        <li>
+                            <a href="{{ url("shoop:registration_register") }}">
+                                <i class="fa fa-edit fa-fw"></i> {% trans %}New user? Register here!{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            <li class="dropdown cart" id="navigation-basket-partial">
+                {% include "shuup_megastore_theme/navigation_basket_partial.jinja" with context %}
+            </li>
+        </ul>
+        <div class="logo hidden-lg hidden-md" style="height:32px;float:left;background-color:#fff;">
+            <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}">
+                {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+                <img src="{%- if cropped_logo -%}
+                              {{ cropped_logo }}
+                          {%- else -%}
+                              {{ STATIC_URL }}shuup_megastore_theme/img/mega_logo.png
+                          {%- endif -%}" class="desktop" alt="{{ request.shop }} Logo" style="height:32px;">
+            </a>
+        </div>
+        <button class="nav-toggler" id="nav-toggler"><span class="hamburger"></span></button>
+    </div>
+</div>
+
+    <div class="support-nav visible-md visible-lg">
+        <div class="container">
+            <div class="logo">
+                <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}">
+                    {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+                    <img src="{%- if cropped_logo -%}
+                                  {{ cropped_logo }}
+                              {%- else -%}
+                                  {{ STATIC_URL }}shuup_megastore_theme/img/mega_logo.png
+                              {%- endif -%}" class="desktop" alt="{{ request.shop }} Logo">
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <div class="hidden-xs">
+                        <form method="get" action="{{ url("shoop:product_search") }}" class="search-form" role="search">
+                            <div class="form-group">
+                                <input type="search" name="q" class="form-control" placeholder="{% trans %}Search{% endtrans %}" required>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="visible-xs">
+                        <button class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+                            <form method="get" action="{{ url("shoop:product_search") }}" class="search-form" role="search">
+                                <div class="form-group">
+                                    <input type="search" name="q" class="form-control" placeholder="{% trans %}Search{% endtrans %}" required>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</nav>

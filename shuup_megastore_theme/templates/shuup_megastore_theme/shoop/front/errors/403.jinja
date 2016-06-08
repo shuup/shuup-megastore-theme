@@ -1,0 +1,21 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{% trans %}Permission Denied{% endtrans %} (403){% endblock %}
+{% block content_title %}{{ self.title() }}{% endblock %}
+
+{% block breadcrumb %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+            <li class="active">{{ self.title() }}</li>
+        </ol>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p class="lead"><i class="fa fa-info-circle text-info"></i> {% trans %}Unfortunately you didn't have permission to display this page.{% endtrans %}</p>
+        <hr>
+        <a href="/"><i class="fa fa-angle-double-left"></i> {% trans %}Back to Homepage{% endtrans %}</a>
+    </div>
+{% endblock %}

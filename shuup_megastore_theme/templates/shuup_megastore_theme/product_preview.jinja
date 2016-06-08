@@ -1,0 +1,37 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
+{% set product_url = url("shoop:product", pk=product.pk, slug=product.slug) %}
+{% set price_info = product.get_price_info(request) %}
+<div class="product-preview-modal modal fade" id="product-{{ product.id }}-modal" tabindex="-1" role="dialog" aria-labelledby="product-{{ product.id }}-preview">
+    <div class="modal-dialog" role="document">
+        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+        <div class="modal-content" id="product-{{ product.id }}-preview">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="preview-image">
+                        {% if price_info.is_discounted %}
+                            <div class="labels">
+                                <span class="sale-badge">{{ -price_info.discount_rate|percent }}</span>
+                            </div>
+                        {% endif %}
+                        {% set image = product.primary_image|thumbnail(size=(750,750)) %}
+                        {% if image %}
+                            <img src="{{ image }}" class="primary-image" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image.png" class="no-image" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+                    <div class="preview-details">
+                        <h2>{{ product.name }}</h2>
+                        {% if product.description %}<p class="description">{{ product.description|safe|truncate(150, False) }}</p>{% endif %}
+                        <div class="product-price">
+                            {{ macros.render_product_price(product) }}
+                        </div>
+                        <hr>
+                        {% include "shoop/front/product/_detail_order_section.jinja" with context %}
+                        <a href="{{ product_url }}" class="btn-open-page btn btn-default btn-block"><i class="fa fa-search"></i> {% trans %}Open product page{% endtrans %} <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

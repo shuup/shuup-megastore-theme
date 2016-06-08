@@ -1,0 +1,292 @@
+body {
+    @media (max-width: @screen-sm-max) {
+        overflow-x: hidden;
+
+        &.offcanvas-open {
+            overflow-y: hidden;
+        }
+    }
+}
+
+.content-wrap {
+    transition: transform .4s;
+    position: relative;
+    body.index & {
+        padding-bottom: 0;
+    }
+
+    @media (max-width: (@mobile-nav-breakpoint - 1)) {
+        body.offcanvas-open & {
+            transform: translate3d(-@mobile-nav-width, 0, 0);
+        }
+    }
+}
+
+
+.page-content {
+    padding-top: 20px;
+    padding-bottom: 60px;
+    main.index & {
+        padding-top: 0;
+    }
+}
+
+.page-header {
+    border: 0;
+    text-transform: uppercase;
+}
+
+.btn {
+    font-family: @font-headline;
+    text-transform: uppercase;
+}
+
+.bootstrap-select {
+    .btn {
+        font-family: @font-primary;
+        text-transform: none;
+    }
+}
+
+.panel, .well {
+    hr {
+        border-color: @border-color;
+    }
+}
+
+.scroll-top-btn {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+
+    &.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.title-bar {
+    width: 100%;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 25px;
+
+    &.light {
+        padding: 0px 15px;
+        text-align: center;
+        position: relative;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: @brand-light;
+            z-index: 0;
+        }
+        h1, h2, h3, h4 {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+            padding: 2px 15px;
+            margin: 0;
+            background: #fff;
+            vertical-align: middle;
+        }
+    }
+
+    &.dark {
+        padding: 10px 15px;
+        background: @brand-dark;
+        color: #fff;
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+    }
+}
+
+.frontpage-carousel {
+    margin-bottom: 50px;
+}
+
+section.image-banner {
+    background: @brand-primary;
+    padding: 10px 0px;
+    text-align: center;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    h1 {
+        margin: 0 20px;
+        text-transform: uppercase;
+        color: #fff;
+        text-align: left;
+
+        @media (min-width: @screen-md-min) {
+            font-size: 4rem;
+        }
+    }
+}
+
+.breadcrumb {
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    color: @text-muted;
+    .small();
+
+    > li {
+        display: inline-block;
+
+        a {
+            color: @text-muted;
+        }
+
+        + li:before {
+            content: "@{breadcrumb-separator}\00a0"; // Unicode space added since inline-block means non-collapsing white-space
+            padding: 0 5px;
+        }
+    }
+}
+
+.panel {
+    box-shadow: none;
+    border: 0;
+    &.panel-white-bg {
+        background: #fff;
+    }
+    .panel-heading {
+        text-transform: uppercase;
+    }
+    .panel-title {
+        font-size: @font-size-h3;
+    }
+}
+
+.message-wrapper {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
+.main-menu {
+    background-color: @brand-light;
+    border-bottom: 4px solid @brand-primary;
+    padding: 15px 10px 15px 25px;
+    a {
+        font-size: 20px;
+        color:#000;
+        text-transform: uppercase;
+        font-weight:bold;
+    }
+}
+#main-menu {
+    background-color: @brand-light;
+    ul {
+        padding:0;
+        margin: 0;
+        list-style-type: none;
+
+    }
+    > ul {
+        li {
+            a {
+                padding: 10px 0 10px 25px;
+                font-size: 14px;
+                color: #000;
+                display: block;
+                &:hover {
+                    background-color: @brand-primary;
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+            &.category-link {
+                .mega-menu-container {
+
+                    position: absolute;
+                    left: 95%;
+                    top: 0;
+                    background: #fff;
+                    visibility: hidden;
+                    //overflow: hidden;
+                    overflow-y: auto;
+                    opacity: 0;
+                    border: 1px solid #ddd;
+                    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.1);
+                    transition: all .3s;
+                    padding: 0px;
+                    margin-bottom: 15px;
+                    max-height: 80vh;
+
+                    width: 800px;
+
+                    z-index: 1000;
+                    &.open {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                    ul {
+                        .make-sm-column(4);
+                        .make-md-column(3);
+                    }
+                    a {
+                        padding-left:0;
+                        color: @brand-dark;
+                        &:hover {
+                            background-color: transparent;
+                            text-decoration: underline;
+                        }
+                        &.megamenu-main-link {
+                            color: @brand-primary;
+                            padding: 10px 0 10px 15px;
+                            background-color: @brand-lighter;
+                            border-bottom: 1px solid @brand-primary;
+                            text-transform: uppercase;
+                            font-size: 16px;
+                            font-weight: bold;
+
+                            //&:hover {
+                            //    background-color: transparent;
+                            //}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.table.table-prices {
+    width: 50%;
+    tr {
+        td {
+            white-space: nowrap;
+            border: none;
+            .original-price {
+                font-size: 13px;
+                text-decoration: line-through;
+            }
+            .discounted-price {
+                font-size: 17px;
+            }
+        }
+    }
+}
+
+.discount-color {
+    color: @discount-color;
+}

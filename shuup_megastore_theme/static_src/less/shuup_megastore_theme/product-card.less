@@ -1,0 +1,111 @@
+.product-card {
+    text-align: center;
+    position: relative;
+
+    &:hover, &:focus {
+        .overlay {
+            @media (min-width: @screen-sm-min) {
+                display: block;
+            }
+        }
+    }
+
+    &.category-view,
+    &.search-view {
+        margin-bottom: 40px;
+        .make-xs-column(6);
+        .make-sm-column(4);
+        .make-md-column(3);
+        @media (max-width: @screen-xs-max) {
+            &:nth-child(2n+1) {
+                clear: both;
+            }
+        }
+        @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+            &:nth-child(3n+1) {
+                clear: both;
+            }
+        }
+        @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+            &:nth-child(4n+1) {
+                clear: both;
+            }
+        }
+        @media (min-width: @screen-lg-min) {
+            width: 20%;
+            padding: 0px 15px;
+            float: left;
+            &:nth-child(5n+1) {
+                clear: both;
+            }
+        }
+    }
+
+    .overlay {
+        z-index: 2;
+        display: none;
+        position: absolute;
+        top: 125px;
+        left: 15px;
+        right: 15px;
+        text-align: center;
+        .btn-preview {
+            background: @brand-dark;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: @font-primary;
+            i {
+                margin-right: 3px;
+                font-size: 1.4rem;
+            }
+            &:hover, &:focus {
+                background: lighten(@brand-dark, 7%);
+                color: #fff;
+            }
+        }
+    }
+
+    a {
+        display: block;
+        color: @text-color;
+        &:hover, &:focus {
+            color: @brand-primary;
+        }
+    }
+
+    .labels {
+        position: absolute;
+        z-index: 2;
+        left: 15px;
+        top: 0;
+        .sale-badge {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin-right: 7px;
+            background: @brand-danger;
+            border-radius: 50%;
+            color: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            font-family: @font-headline;
+        }
+    }
+
+    .product-image {
+        padding: 0px 15px;
+        position: relative;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .detail-wrap {
+        padding: 7px 15px;
+        font-size: 1.3rem;
+    }
+}

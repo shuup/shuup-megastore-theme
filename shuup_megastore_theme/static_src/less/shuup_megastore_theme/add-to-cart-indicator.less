@@ -1,0 +1,75 @@
+// Popup indication for products being added to basket
+.cart-indicator {
+    color: #fff;
+    position: fixed;
+    text-align: center;
+    display: block;
+    width: auto;
+    padding: 30px;
+    width: 290px;
+    top: 50px;
+    right: 50px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    border-radius: 2px;
+
+    // Hide this for now
+
+    // &:before {
+    //     opacity: 0;
+    //     visibility: hidden;
+    //     content: "";
+    //     position: absolute;
+    //     top: -10px;
+    //     right: 10px;
+    //     border-bottom: 10px solid transparent;
+    //     border-left: 10px solid transparent;
+    //     border-right: 10px solid transparent;
+    // }
+
+    .success-msg, .error-msg {
+        opacity: 0;
+        .scale(0.5);
+        .transition(all 0.2s);
+        i {
+            font-size: 3em;
+        }
+        p {
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+    }
+
+    &.in {
+        z-index: 3000;
+        opacity: 1;
+        visibility: visible;
+        .transition(all 0.3s);
+        &:before {
+            .transition(all 0.3s);
+            opacity: 1;
+            visibility: visible;
+        }
+        &.success {
+            background-color: fade(@brand-primary, 80%);
+            &:before { border-bottom-color: fade(@brand-success, 80%); }
+            .success-msg {
+                display: block;
+                .scale(1);
+                opacity: 1;
+            }
+            .error-msg { display: none; }
+        }
+        &.error {
+            background-color: fade(@brand-danger, 80%);
+            &:before { border-bottom-color: fade(@brand-danger, 80%); }
+            .error-msg {
+                display: block;
+                .scale(1);
+                opacity: 1;
+            }
+            .success-msg { display: none; }
+        }
+    }
+}
