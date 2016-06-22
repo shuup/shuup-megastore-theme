@@ -1,3 +1,5 @@
 node_modules
 bower_components
 static/shuup_megastore_theme/fonts/
+static/shuup_megastore_theme/css
+static/shuup_megastore_theme/js
