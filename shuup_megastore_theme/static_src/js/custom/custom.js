@@ -111,7 +111,7 @@ $(function() {
 
     // Set up owl carousel for product list with 5 items
     $(".owl-carousel.five").owlCarousel({
-        margin: 30,
+        margin: 20,
         nav: true,
         navText: [
             '<i class="fa fa-angle-left"></i>',
@@ -121,34 +121,15 @@ $(function() {
         responsive: {
             0: { // breakpoint from 0 up
                 items : 2,
+                slideBy: 2,
             },
             640: { // breakpoint from 640 up
-                items : 3,
-            },
-            992: { // breakpoint from 992 up
-                items : 5,
-            }
-        }
-    });
-
-    // Set up owl carousel for product list with 3 items
-    $(".owl-carousel.four").owlCarousel({
-        margin: 30,
-        nav: true,
-        navText: [
-            '<i class="fa fa-angle-left"></i>',
-            '<i class="fa fa-angle-right"></i>'
-        ],
-        responsiveClass: true,
-        responsive: {
-            0: { // breakpoint from 0 up
-                items : 2,
-            },
-            640: { // breakpoint from 640 up
-                items : 2,
-            },
-            992: { // breakpoint from 992 up
                 items : 4,
+                slideBy: 2,
+            },
+            1200: { // breakpoint from 992 up
+                items : 5,
+                slideBy: 3,
             }
         }
     });
@@ -227,6 +208,16 @@ function toggleMegaMenu() {
     const posY = $(this).position().top - 70;
     elem.css("top", posY);
     elem.toggleClass("open");
+    if(elem.hasClass("open")) {
+        const identifier = ".mega-menu-container >ul";
+        const elementWidth = elem.children(identifier).first().width();
+        const ulCount = elem.children(identifier).length;
+
+        if (ulCount > 4)
+            ulCount = 4;
+
+        elem.css("width", elementWidth * ulCount + 20);
+    }
 }
 
 function isOffcanvasNavOpen() {
