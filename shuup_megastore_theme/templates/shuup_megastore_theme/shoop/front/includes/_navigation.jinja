@@ -1,4 +1,4 @@
-<nav class="navbar navbar-static-top site-nav" role="navigation">
+    <nav class="navbar navbar-static-top site-nav" role="navigation">
     <div class="top-nav">
     <div class="container">
         <ul class="nav-right">
@@ -89,21 +89,11 @@
                 {% include "shuup_megastore_theme/navigation_basket_partial.jinja" with context %}
             </li>
         </ul>
-        <div class="logo hidden-lg hidden-md" style="height:32px;float:left;background-color:#fff;">
-            <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}">
-                {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
-                <img src="{%- if cropped_logo -%}
-                              {{ cropped_logo }}
-                          {%- else -%}
-                              {{ STATIC_URL }}shuup_megastore_theme/img/mega_logo.png
-                          {%- endif -%}" class="desktop" alt="{{ request.shop }} Logo" style="height:32px;">
-            </a>
-        </div>
-        <button class="nav-toggler" id="nav-toggler"><span class="hamburger"></span></button>
     </div>
 </div>
 
-    <div class="support-nav visible-md visible-lg">
+
+    <div class="support-nav">
         <div class="container">
             <div class="logo">
                 <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}">
@@ -117,7 +107,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <div class="hidden-xs">
+                    <div class="hidden-xs hidden-sm">
                         <form method="get" action="{{ url("shoop:product_search") }}" class="search-form" role="search">
                             <div class="form-group">
                                 <input type="search" name="q" class="form-control" placeholder="{% trans %}Search{% endtrans %}" required>
@@ -125,19 +115,9 @@
                             </div>
                         </form>
                     </div>
-                    <div class="visible-xs">
-                        <button class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <div class="dropdown-menu" role="menu">
-                            <form method="get" action="{{ url("shoop:product_search") }}" class="search-form" role="search">
-                                <div class="form-group">
-                                    <input type="search" name="q" class="form-control" placeholder="{% trans %}Search{% endtrans %}" required>
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <li class="nav-toggler" id="nav-toggler">
+                        <span class="hamburger"></span>
+                    </li>
                 </li>
             </ul>
         </div>

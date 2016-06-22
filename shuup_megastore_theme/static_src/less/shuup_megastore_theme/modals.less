@@ -6,7 +6,6 @@ button.close-modal {
     color: #fff;
     height: 40px;
     width: 40px;
-    line-height: 40px;
     text-align: center;
     display: block;
     z-index: 2;
@@ -71,8 +70,23 @@ button.close-modal {
         .amount .input-group {
             width: 1%;
             input {
-                width: 130px;
+                width: 170px;
             }
+        }
+        .price-line {
+            color: @brand-primary;
+            font-size: 2.5rem;
+        }
+    }
+    .btn-primary {
+        margin-top: 20px;
+    }
+    .btn-default {
+        border: none;
+        color: @brand-dark;
+        background-color: @brand-lighter;
+        &:hover {
+            background-color: @brand-light;
         }
     }
 }

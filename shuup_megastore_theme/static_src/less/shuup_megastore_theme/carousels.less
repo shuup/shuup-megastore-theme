@@ -53,10 +53,13 @@
         color: @text-muted;
 
         .owl-prev, .owl-next {
+            .transition(color 0.25s);
+            &:hover, &:focus {
+                color: @brand-primary;
+            }
             &.disabled {
                 cursor: default;
-                cursor: not-allowed;
-                opacity: 0.5;
+                opacity: 0.3;
             }
         }
 
@@ -76,4 +79,13 @@
 
 .carousel-indicators {
     bottom: 0 !important;
+}
+
+section.carousel-banner-section {
+    margin-top: 0px;
+    padding: 0 0px;
+
+    .title-bar {
+        display: none;
+    }
 }
