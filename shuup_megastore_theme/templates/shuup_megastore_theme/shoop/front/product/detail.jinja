@@ -48,7 +48,6 @@
                     <p class="text-muted"><small>{{ product.sku }}</small> / <small>{{ product.manufacturer.name }}</small></p>
                 </div>
 
-
                 {% if product|is_discounted %}
                     <table class="table table-prices">
                     <tr>
@@ -105,6 +104,7 @@
                 {% if shoop.product.get_visible_attributes(product) %}
                     <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"><i class="fa fa-tags"></i>{% trans %}Technical information{% endtrans %}</a></li>
                 {% endif %}
+                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"><i class="fa fa-mail-reply"></i>{% trans %}Delivery & refund terms{% endtrans %}</a></li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
@@ -115,6 +115,12 @@
                         {% include "shoop/front/product/_detail_attributes_section.jinja" %}
                     </div>
                 {% endif %}
+                <div role="tabpanel" class="product-attributes tab-pane fade" id="tab4">
+                        <b>Delivery terms</b>
+                        <br>Free delivery within 3-6 working days<br><br>
+                        <b>Refund terms</b>
+                        <br>If you are not satisfied with the product, you may return it for a refund within 30 days of receiving the order.
+                </div>
             </div>
         </div>
 
