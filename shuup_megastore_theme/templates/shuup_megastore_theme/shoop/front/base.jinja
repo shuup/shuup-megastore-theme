@@ -60,37 +60,6 @@
             </div>
         </div>
 
-        <section class="social-media-lift">
-            <div class="container text-center">
-                {% placeholder "global_placeholder" global %}
-                    {% row %}
-                        {% plugin "social_media_links" %}
-                            topic = "Follow us!"
-                            text = "Find out about our best products and offers!"
-                            icon_size = "3x"
-                            alignment = "center"
-                            [links]
-                                [links.Twitter]
-                                    url = "#"
-                                    ordering = "1"
-                                [links.Instagram]
-                                    url = "#"
-                                    ordering = "2"
-                                [links.Youtube]
-                                    url = "#"
-                                    ordering = "3"
-                                [links.Facebook]
-                                    url = "#"
-                                    ordering = "4"
-                                [links.Pinterest]
-                                    url = "#"
-                                    ordering = "5"
-                        {% endplugin %}
-                    {% endrow %}
-                {% endplaceholder %}
-            </div>
-        </section>
-
         {% include "shoop/front/includes/_footer.jinja" %}
 
     </div>

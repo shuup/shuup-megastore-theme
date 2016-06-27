@@ -71,17 +71,8 @@
                 <div id="product-price-section">
                     {% include "shoop/front/product/_detail_order_section.jinja" with context %}
                 </div>
-                <hr>
-                <ul class="boxes">
-                    <li class="delivery" data-toggle="tooltip" title="Free delivery within 3-6 working days" data-placement="bottom">
-                        <i class="fa fa-truck"></i><span>{% trans %}Delivery terms{% endtrans %}</span>
-                    </li>
-                    <li class="return" data-toggle="tooltip" title="If you are not satisfied to the product, you may return it for a refund within 30 days of receiving the order" data-placement="bottom">
-                        <i class="fa fa-reply"></i><span>{% trans %}Refund terms{% endtrans %}</span>
-                    </li>
-                </ul>
-                <hr>
                 <div class="icons">
+                    <p>{% trans %}Share this page{% endtrans %}</p>
                     <span class="fa-stack fa-lg">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-twitter fa-stack-1x"></i>

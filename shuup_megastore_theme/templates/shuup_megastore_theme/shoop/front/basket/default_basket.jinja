@@ -4,24 +4,22 @@
 {% block content_title %}{% endblock %}
 
 {% block content %}
-    <div class="container basket">
-        <div class="title-bar dark">
-            <h2>{% trans %}Checkout{% endtrans %}</h2>
+    <div class="title-bar dark">
+        <h2>{% trans %}Checkout{% endtrans %}</h2>
+    </div>
+    {% if basket.is_empty %}
+        <div class="alert alert-danger">
+            {% trans %}Your shopping cart is empty.{% endtrans %}
         </div>
-        {% if basket.is_empty %}
-            <div class="alert alert-danger">
-                {% trans %}Your shopping cart is empty.{% endtrans %}
-            </div>
-        {% else %}
-            {% include "shoop/front/basket/partials/table.jinja" %}
-            <div class="clearfix">
-                <a href="{{ url("shoop:checkout") }}" class="btn btn-primary btn-lg pull-right">
-                    {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
-                </a>
-            </div>
-        {% endif %}
+    {% else %}
+        {% include "shoop/front/basket/partials/table.jinja" %}
         <div class="clearfix">
-            {% placeholder "basket_extra" %}{% endplaceholder %}
+            <a href="{{ url("shoop:checkout") }}" class="btn btn-primary btn-lg pull-right">
+                {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
+            </a>
         </div>
+    {% endif %}
+    <div class="clearfix">
+        {% placeholder "basket_extra" %}{% endplaceholder %}
     </div>
 {% endblock %}

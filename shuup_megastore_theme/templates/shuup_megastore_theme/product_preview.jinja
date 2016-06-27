@@ -13,7 +13,7 @@
                                 <span class="sale-badge">{{ -price_info.discount_rate|percent }}</span>
                             </div>
                         {% endif %}
-                        {% set image = product.primary_image|thumbnail(size=(750,750)) %}
+                        {% set image = product.primary_image|thumbnail(size=(750,750), crop="smart", upscale=True) %}
                         {% if image %}
                             <img src="{{ image }}" class="primary-image" alt="{{ product.name }}">
                         {% else %}
