@@ -57,5 +57,11 @@
     {% placeholder "category_bottom_extra" %}{% endplaceholder %}
 {% endblock %}
 {% block extrajs %}
-
+    <script>
+        $(function() {
+            $("#sorter :input").change(function() {
+                $("#sorter").submit();
+            });
+        });
+    </script>
 {% endblock %}
