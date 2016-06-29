@@ -19,6 +19,7 @@ body {
 .content-wrap {
     transition: transform .4s;
     position: relative;
+    min-height: 100%;
     body.index & {
         padding-bottom: 0;
     }
@@ -30,10 +31,21 @@ body {
     }
 }
 
+#main {
+  overflow: auto;
+  padding-bottom: 230px; /* this needs to be bigger than footer height*/
+  overflow:hidden;
+}
+
+.footer {
+  position: relative;
+  margin-top: -230px; /* negative value of footer height */
+  height: 230px;
+  clear: both;
+  padding-top: 40px;
+}
 
 .page-content {
-    padding-top: 20px;
-    padding-bottom: 60px;
     main.index & {
         padding-top: 0;
     }
@@ -133,6 +145,7 @@ section.image-banner {
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
+    background-image: url(../img/category-pic.jpg);
 
     h1 {
         margin: 0 20px;
@@ -173,12 +186,13 @@ section.image-banner {
     border: 0;
     &.panel-white-bg {
         background: #fff;
+        border: 3px solid @brand-lighter;
     }
-    .panel-heading {
-        text-transform: uppercase;
-    }
+
     .panel-title {
         font-size: @font-size-h3;
+        border-bottom: 3px solid @brand-primary;
+        padding: 7px;
     }
 }
 

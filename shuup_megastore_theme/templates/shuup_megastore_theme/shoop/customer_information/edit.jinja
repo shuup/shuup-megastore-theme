@@ -3,7 +3,7 @@
 {% block content_title %}{% trans %}User account information{% endtrans %}{% endblock %}
 
 {% block content %}
-    <div class="container user-account">
+    <div class="user-account">
         <form role="form" method="post" action="">
             {% csrf_token %}
             {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
