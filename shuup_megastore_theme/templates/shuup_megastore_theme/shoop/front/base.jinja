@@ -14,54 +14,53 @@
 <body>
 
     <div class="content-wrap">
-    <div id="main" class="clear-top">
+        <div id="main" class="clear-top">
 
-    {% if messages %}
-        <div class="message-wrapper">
-            {% for message in messages %}
-                <div class="container">
-                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        {{ message }}
+        {% if messages %}
+            <div class="message-wrapper">
+                {% for message in messages %}
+                    <div class="container">
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="{% trans %}Close{% endtrans %}"><span aria-hidden="true">&times;</span></button>
+                            {{ message }}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="Scroll to top">
+        <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="{% trans %}Scroll to top{% endtrans %}">
             <i class="fa fa-angle-up"></i>
         </a>
 
         {% include "shoop/front/includes/_navigation.jinja" %}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    {% include "shoop/front/includes/megamenu.jinja" with context %}
-                </div>
-                <div class="col-md-9">
-                    {% block banner %}{% endblock %}
-                    {% block breadcrumb %}{% endblock %}
-                    <main class="{% block extra_main_class %}{% endblock %}">
-                        {% block before_content_title %}{% endblock %}
-                        {% if self.content_title() %}
-                            <div class="page-header">
-                                <h1>{% block content_title %}{% endblock %}</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% include "shoop/front/includes/megamenu.jinja" with context %}
+                    </div>
+                    <div class="col-md-9">
+                        {% block banner %}{% endblock %}
+                        {% block breadcrumb %}{% endblock %}
+                        <main class="{% block extra_main_class %}{% endblock %}">
+                            {% block before_content_title %}{% endblock %}
+                            {% if self.content_title() %}
+                                <div class="page-header">
+                                    <h1>{% block content_title %}{% endblock %}</h1>
+                                </div>
+                            {% endif %}
+                            <div class="page-content">
+                                {% block content %}{% endblock %}
                             </div>
-                        {% endif %}
-                        <div class="page-content">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </main>
+                        </main>
+                    </div>
+                </div>
+                <div class="row">
+                    {% block carousels %}{% endblock %}
                 </div>
             </div>
-            <div class="row">
-                {% block carousels %}{% endblock %}
-            </div>
         </div>
-        </div>
-
 
         {% include "shoop/front/includes/_footer.jinja" %}
 
