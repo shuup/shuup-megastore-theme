@@ -1,0 +1,31 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Checkout{% endtrans %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default panel-white-bg">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                {% trans %}Checkout{% endtrans %}
+            </h1>
+        </div>
+        <div class="panel-body">
+            {% if basket.is_empty %}
+            <div class="alert alert-danger">
+                {% trans %}Your shopping cart is empty.{% endtrans %}
+            </div>
+            {% else %}
+            {% include "shuup/front/basket/partials/table.jinja" %}
+            <div class="clearfix">
+                <a href="{{ url("shuup:checkout") }}" class="btn btn-primary btn-lg pull-right">
+                {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
+                </a>
+            </div>
+            {% endif %}
+            <div class="clearfix">
+                {% placeholder "basket_extra" %}{% endplaceholder %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

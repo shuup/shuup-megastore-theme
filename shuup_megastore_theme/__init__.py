@@ -2,8 +2,8 @@ from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.apps import AppConfig
-from shoop.xtheme import Theme
+from shuup.apps import AppConfig
+from shuup.xtheme import Theme
 
 
 class ShuupMegastoreTheme(Theme):
@@ -19,7 +19,7 @@ class ShuupMegastoreTheme(Theme):
     def _format_cms_links(self, **query_kwargs):
         if "shuup.simple_cms" not in settings.INSTALLED_APPS:
             return
-        from shoop.simple_cms.models import Page
+        from shuup.simple_cms.models import Page
         for page in Page.objects.visible().filter(**query_kwargs):
             yield {"url": "/%s" % page.url, "text": force_text(page)}
 

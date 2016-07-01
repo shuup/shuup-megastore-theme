@@ -1,6 +1,6 @@
 from django import forms
-from shoop.front.template_helpers.general import get_newest_products, get_best_selling_products, get_random_products
-from shoop.xtheme.plugins._base import TemplatedPlugin  # TODO: FIX THIS.
+from shuup.front.template_helpers.general import get_newest_products, get_best_selling_products, get_random_products
+from shuup.xtheme.plugins._base import TemplatedPlugin  # TODO: FIX THIS.
 from django.utils.translation import ugettext_lazy as _
 
 
