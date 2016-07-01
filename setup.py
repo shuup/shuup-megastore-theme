@@ -2,21 +2,21 @@ import setuptools
 
 
 try:
-    import shoop_setup_utils
+    import shuup_setup_utils
 except ImportError:
-    shoop_setup_utils = None
+    shuup_setup_utils = None
 
 
 if __name__ == '__main__':
     setuptools.setup(
         name="shuup_megastore_theme",
-        version="1.0.0",
+        version="1.0.1",
         description="Shuup Megastore Theme",
         packages=setuptools.find_packages(),
         include_package_data=True,
-        entry_points={"shoop.addon": "shuup_megastore_theme=shuup_megastore_theme"},
-        cmdclass=(shoop_setup_utils.COMMANDS if shoop_setup_utils else {}),
+        entry_points={"shuup.addon": "shuup_megastore_theme=shuup_megastore_theme"},
+        cmdclass=(shuup_setup_utils.COMMANDS if shuup_setup_utils else {}),
         install_requires=[
-            'shoop>=3.0,<5',
+            'shuup>=0.4',
         ],
     )

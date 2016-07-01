@@ -1,5 +1,5 @@
-#https://github.com/shuupio/shoop/releases/download/v3.0.0/shuup-3.0.0-py2.py3-none-any.whl
-#-e .
+#git+git://github.com/shuup/shuup@v0.4.0#egg=shuup==0.4.0
+-e .
 #PyYAML==3.11
 #beautifulsoup4==4.4.1
-#https://github.com/shoopio/shoop-carousel/archive/v1.0.1.zip#egg=shuup-carousel==1.0.1
+#git+git://github.com/shuup/shuup-carousel@v1.0.9#egg=shuup-carousel==1.0.9

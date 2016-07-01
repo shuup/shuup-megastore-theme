@@ -1,4 +1,4 @@
-from shoop.front.views.product import ProductDetailView
+from shuup.front.views.product import ProductDetailView
 
 
 class ProductPreviewView(ProductDetailView):
@@ -12,7 +12,7 @@ class ProductPreviewView(ProductDetailView):
 
         context = super(ProductPreviewView, self).get_context_data(**kwargs)
         # Add `return_url` to context to avoid usage of `request.path` in
-        # `shuup_megastore_theme/shoop/front/product/_detail_order_section.jinja`
+        # `shuup_megastore_theme/shuup/front/product/_detail_order_section.jinja`
         context["return_url"] = "/xtheme/products"
         return context
 

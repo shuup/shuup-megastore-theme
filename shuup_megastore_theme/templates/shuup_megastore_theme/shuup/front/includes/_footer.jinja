@@ -1,0 +1,42 @@
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container">
+        {% placeholder "footer-top" global %}
+            {% row %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "category_links" %}
+                        title = "Categories"
+                        show_all_categories = false
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "text" %}
+                        text = "#### Store Information\n#### Order/Service\n#### Opening Times\n"
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "shuup_mailchimp.newsletter" %}
+                        title = "Newsletter"
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "social_media_links" %}
+                        title = "Follow Us"
+                    {% endplugin %}
+                {% endcolumn %}
+            {% endrow %}
+        {% endplaceholder %}
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+        {% placeholder "footer-bottom" global %}
+            {% row %}
+                {% plugin "text" %}
+                    text = "* Copyright 2016 - Demo company"
+                {% endplugin %}
+            {% endrow %}
+        {% endplaceholder %}
+        </div>
+    </div>
+</footer>

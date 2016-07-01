@@ -1,5 +1,5 @@
-{%- import "shoop/front/macros.jinja" as macros with context -%}
-{% set product_url = url("shoop:product", pk=product.pk, slug=product.slug) %}
+{%- import "shuup/front/macros.jinja" as macros with context -%}
+{% set product_url = url("shuup:product", pk=product.pk, slug=product.slug) %}
 {% set price_info = product.get_price_info(request) %}
 <div class="product-preview-modal modal fade" id="product-{{ product.id }}-modal" tabindex="-1" role="dialog" aria-labelledby="product-{{ product.id }}-preview">
     <div class="modal-dialog" role="document">
@@ -27,7 +27,7 @@
                             {{ macros.render_product_price(product) }}
                         </div>
                         <hr>
-                        {% include "shoop/front/product/_detail_order_section.jinja" with context %}
+                        {% include "shuup/front/product/_detail_order_section.jinja" with context %}
                         <a href="{{ product_url }}" class="btn-open-page btn btn-default btn-block"><i class="fa fa-search"></i> {% trans %}Open product page{% endtrans %} <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>

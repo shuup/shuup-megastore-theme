@@ -12,7 +12,7 @@
 <script>
     function updateNavigationBasket() {
         $.ajax({
-            url: "{{ url('shoop:xtheme_extra_view', view='basket_partial') }}",
+            url: "{{ url('shuup:xtheme_extra_view', view='basket_partial') }}",
             method: "GET",
             success: function(basket_html) {
                 $("#navigation-basket-partial").html(basket_html);
