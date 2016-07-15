@@ -2,6 +2,24 @@
     .category-header {
         margin-bottom: 40px;
     }
+    .child-categories {
+        margin-bottom: 20px;
+
+        a.child-category {
+            display: inline-table;
+            margin-bottom: 5px;
+            padding: 5px 10px 5px 10px;
+            background-color: @brand-light;
+            text-decoration: none;
+            color: @brand-dark;
+            white-space: nowrap;
+
+            &:hover {
+                background-color: @brand-primary;
+                color: #fff;
+            }
+        }
+    }
     .pager {
         margin-top: -20px;
         margin-bottom: 60px;

@@ -29,6 +29,11 @@
 {% block content %}
     <div class="product-list">
         <div class="category-header">
+            <div class="child-categories">
+                {% for child_cat in category.get_children() if child_cat.is_visible(customer=request.customer) %}
+                    <a href="{{ shuup.urls.model_url(child_cat) }}" class="child-category">{{ child_cat.name }}</a>
+                {% endfor %}
+            </div>
             <form role="form" class="form-inline" method="get" action="" id="sorter">
                 <div class="form-group selectpicker">
                     {{ form.sort|safe }}
