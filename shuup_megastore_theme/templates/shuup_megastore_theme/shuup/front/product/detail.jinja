@@ -71,6 +71,22 @@
                 <div id="product-price-section">
                     {% include "shuup/front/product/_detail_order_section.jinja" with context %}
                 </div>
+                <div class="review">
+                    <p>{% trans %}Product review{% endtrans %}</p>
+                        <span class="yellow">
+                            <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </span>
+                    <span class="gray">
+                        <i class="fa fa-star"></i>
+                    </span>
+                    <span class="text">
+                        {% trans %}(21){% endtrans %}
+                    </span>
+                </div>
+
                 <div class="icons">
                     <p>{% trans %}Share this page{% endtrans %}</p>
                     <span class="fa-stack fa-lg">
