@@ -11,7 +11,7 @@
                 <col style="min-width: 210px;">
                 <col style="min-width: 90px;">
             </colgroup>
-            <thead>
+            <thead class="hidden-xs hidden-sm">
                 <tr>
                     <th>{% trans %}Items{% endtrans %}</th>
                     <th class="text-right">{% trans %}Price{% endtrans %}</th>
@@ -27,7 +27,7 @@
                     </th>
                 </tr>
             </tfoot>
-            <tbody>
+            <tbody class="hidden-xs hidden-sm">
                 {% for line in request.basket.get_lines() %}
                     <tr>
                         <td><span class="numbers-font">{{ line.quantity|number }}</span> &times; <a href="{{ shuup.urls.model_url(line.product) }}">{{ line.text }}</a></td>
