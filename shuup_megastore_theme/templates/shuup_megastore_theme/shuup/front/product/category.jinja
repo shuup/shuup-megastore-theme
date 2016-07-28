@@ -12,8 +12,8 @@
 {% block banner %}
     <section class="image-banner"{% if category.image %} style="background-image: url({{ category.image.url }})"{% endif %}>
         <h1 class="section-title">{{ category.name }}</h1>
-
     </section>
+    {% placeholder "category_top_extra" %}{% endplaceholder %}
 {% endblock %}
 
 {% block breadcrumb %}
