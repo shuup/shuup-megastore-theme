@@ -17,15 +17,126 @@
             </div>
             {% else %}
             {% include "shuup/front/basket/partials/table.jinja" %}
+            <hr>
+            <div class="basket-summary">
+                <div class="row basket-discount-code">
+                    <div class="col-sm-6 pull-left">
+                        <a class="coupon-toggler" role="button" data-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon">{% trans %}Have a coupon code? Enter it here{% endtrans %}</a>
+                        <div class="collapse" id="collapseCoupon">
+                            <div class="input-group input-coupon">
+                                <input type="text" class="form-control" name="code" id="discount-code" placeholder="{% trans %}Coupon Code{% endtrans %}">
+                                <span class="input-group-btn">
+                                    <button type="submit" id="submit-code" class="btn btn-primary">{% trans %}Submit Code{% endtrans %}</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix">
+                <hr>
+                <a href="/" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
                 <a href="{{ url("shuup:checkout") }}" class="btn btn-primary btn-lg pull-right">
                 {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
                 </a>
             </div>
             {% endif %}
-            <div class="clearfix">
-                {% placeholder "basket_extra" %}{% endplaceholder %}
+            {% if user.is_authenticated() and shuup.urls.has_url("shuup:saved_cart.save") %}
+            <div class="cart-saver row">
+                <div class="col-sm-6 col-sm-offset-6">
+                    <div class="clearfix">
+                        <a class="btn btn-primary cart-saver-toggle pull-right btn-save-cart" href="#collapseSaveCart" data-toggle="collapse">{% trans %}Save cart{% endtrans %}</a>
+                    </div>
+                    <div class="collapse" id="collapseSaveCart">
+                        <div class="input-group input-save-cart">
+                            <input type="text" id="cart-title" class="form-control" name="title" placeholder="{% trans %}Cart Title{% endtrans %}">
+                            <span class="input-group-btn">
+                                <button id="save-cart" type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+                            </span>
+                        </div>
+                        <div id="save-cart-status" class="pull-right"></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="icons pull-right">
+                <p class>{% trans %}Share this page{% endtrans %}</p>
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x"></i>
+                        </span>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-facebook fa-stack-1x"></i>
+                        </span>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-pinterest fa-stack-1x"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
+        {% placeholder "basket_extra" %}{% endplaceholder %}
     </div>
+{% endblock %}
+
+{% block extrajs %}
+{# TODO: Someone maybe can figure out a better way to achieve this without a separate button #}
+<script type="text/javascript">
+    $(function() {
+        $("#update_basket_form .quantity :input").change(function() {
+            $("#update_basket_form").submit();
+        });
+        $("#submit-code").click(function(e){
+            e.preventDefault();
+            const coupon = $("#discount-code").val();
+            if (coupon.length) {
+                // ajax request to command
+                const data = {
+                    "command": "add_campaign_code",
+                    "code": coupon
+                };
+                $.ajax({
+                    url: "",
+                    method: "POST",
+                    data: data,
+                    success: function(response) {
+                        if (response.ok) {
+                            location.reload();
+                        }
+                        else {
+                            alert("{% trans %}Coupon is not available.{% endtrans %}")
+                        }
+                    },
+                    error: function() {
+                        alert("{% trans %}Error when adding coupon.{% endtrans %}")
+                    }
+                });
+            }
+        });
+        {% if shuup.urls.has_url("shuup:saved_cart.save") %}
+        $("#save-cart").click(function(e){
+            e.preventDefault();
+            const title = $("#cart-title").val();
+            $("#save-cart-status").empty();
+            $.ajax({
+                url: "{{ url('shuup:saved_cart.save') }}",
+                method: "POST",
+                data: {
+                    title: title,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    $("#save-cart-status").append("<p>" + gettext("Cart saved!") + "</p>");
+                },
+                error: function(e) {
+                    $("#save-cart-status").append("<p>" + e.responseJSON.error + "</p>");
+                }
+            });
+        });
+        {% endif %}
+        singleSubmitForm($("#update_basket_form"));
+    });
+</script>
 {% endblock %}
