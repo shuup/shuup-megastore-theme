@@ -9,4 +9,3 @@ Image Lightbox, Responsive and Touch-friendly
 * URL: http://osvaldas.info/image-lightbox-responsive-touch-friendly
 
 * static_src/less/vendor/imagelightbox.less
-* static_src/js/vendor/imagelightbox.js

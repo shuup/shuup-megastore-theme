@@ -1,4 +1,5 @@
 {% extends "shuup/front/base.jinja" %}
+
 {% block content_title %}{% endblock %}
 
 {% block extra_main_class %}index{% endblock %}
@@ -8,15 +9,17 @@
 {% placeholder frontpage_carousel %}{% endplaceholder %}
     {% placeholder "front_content" %}
         {% row %}
-            {% plugin "shuup_megastore_theme.product_highlight" %}
+            {% plugin "product_highlight" %}
                 type = "newest"
                 title = "New Products"
+                count = 13
             {% endplugin %}
         {% endrow %}
         {% row %}
-            {% plugin "shuup_megastore_theme.product_highlight" %}
+            {% plugin "product_highlight" %}
                 type = "best_selling"
                 title = "Best selling products"
+                count = 13
             {% endplugin %}
         {% endrow %}
     {% endplaceholder %}
