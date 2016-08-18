@@ -1,0 +1,84 @@
+
+{% macro render_product_basic_information(product) %}
+    <h1>{{ product.name }}</h1>
+    <div class="sku">
+        <p class="text-muted"><small>{{ product.sku }}</small>{% if product.manufacturer %} / <small>{{ product.manufacturer.name }}</small>{% endif %}</p>
+    </div>
+
+    {% if product|is_discounted %}
+        <table class="table table-prices">
+        <tr>
+            <td class="text-right">{{ _("List Price") }}:</td>
+            <td><span class="original-price">{{ product|base_price }}</span></td>
+        </tr>
+        <tr>
+            <td class="text-right">{{ _("Discounted Price") }}:</td>
+            <td><span class="discounted-price discount-color">{{ product|price }}</span></td>
+        </tr>
+        <tr>
+            <td class="text-right">{{ _("You Save") }}:</td>
+            <td><span class="discount-color">{{ product|discount_amount }} ({{ product|discount_percent }})</span></td>
+        </tr>
+        </table>
+    {% endif %}
+
+    <div class="review">
+        <p>{% trans %}Product review{% endtrans %}</p>
+            <span class="yellow">
+                <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+        </span>
+        <span class="gray">
+            <i class="fa fa-star"></i>
+        </span>
+        <span class="text">
+            {% trans %}(21){% endtrans %}
+        </span>
+    </div>
+
+    <div class="icons">
+        <p>{% trans %}Share this page{% endtrans %}</p>
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-twitter fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-facebook fa-stack-1x"></i>
+        </span>
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-pinterest fa-stack-1x"></i>
+        </span>
+    </div>
+{% endmacro %}
+
+{% macro render_product_information(product) %}
+<div class="product-tabs" role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><i class="fa fa-file-text-o"></i>{% trans %}Details{% endtrans %}</a></li>
+        {% if shuup.product.get_visible_attributes(product) %}
+            <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"><i class="fa fa-tags"></i>{% trans %}Technical information{% endtrans %}</a></li>
+        {% endif %}
+        <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"><i class="fa fa-mail-reply"></i>{% trans %}Delivery & refund terms{% endtrans %}</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
+            {% include "shuup/front/product/_detail_details_section.jinja" %}
+        </div>
+        {% if shuup.product.get_visible_attributes(product) %}
+            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
+                {% include "shuup/front/product/_detail_attributes_section.jinja" %}
+            </div>
+        {% endif %}
+        <div role="tabpanel" class="product-attributes tab-pane fade" id="tab4">
+                <b>Delivery terms</b>
+                <br>Free delivery within 3-6 working days<br><br>
+                <b>Refund terms</b>
+                <br>If you are not satisfied with the product, you may return it for a refund within 30 days of receiving the order.
+        </div>
+    </div>
+</div>
+{% endmacro %}

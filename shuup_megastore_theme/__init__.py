@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.apps import AppConfig
 from shuup.xtheme import Theme
 
+from shuup.front.themes import views
 
 class ShuupMegastoreTheme(Theme):
     identifier = __name__
@@ -13,7 +14,7 @@ class ShuupMegastoreTheme(Theme):
     template_dir = "shuup_megastore_theme/"
 
     def get_view(self, view_name):
-        from . import views
+        print("get view")
         return getattr(views, view_name, None)
 
     def _format_cms_links(self, **query_kwargs):
@@ -33,9 +34,6 @@ class ShuupMegastoreThemeAppConfig(AppConfig):
     label = __name__
     provides = {
         "xtheme": __name__ + ":ShuupMegastoreTheme",
-        "xtheme_plugin": [
-            "shuup_megastore_theme.plugins:ProductHighlightPlugin",
-        ]
     }
 
 default_app_config = __name__ + ".ShuupMegastoreThemeAppConfig"

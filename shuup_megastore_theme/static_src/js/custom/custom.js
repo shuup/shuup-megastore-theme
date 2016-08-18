@@ -211,7 +211,7 @@ function toggleMegaMenu() {
     if(elem.hasClass("open")) {
         const identifier = ".mega-menu-container >ul";
         const elementWidth = elem.children(identifier).first().width();
-        const ulCount = elem.children(identifier).length;
+        var ulCount = elem.children(identifier).length;
 
         if (ulCount > 4)
             ulCount = 4;

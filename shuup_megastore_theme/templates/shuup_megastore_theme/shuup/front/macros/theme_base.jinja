@@ -1,0 +1,87 @@
+{% macro render_footer() %}
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container">
+        {% placeholder "footer-top" global %}
+            {% row %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "category_links" %}
+                        title = "Categories"
+                        show_all_categories = false
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "text" %}
+                        text = "#### Store Information\n#### Order/Service\n#### Opening Times\n"
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "shuup_mailchimp.newsletter" %}
+                        title = "Newsletter"
+                    {% endplugin %}
+                {% endcolumn %}
+                {% column {"md": 3, "sm":3} %}
+                    {% plugin "social_media_links" %}
+                        title = "Follow Us"
+                    {% endplugin %}
+                {% endcolumn %}
+            {% endrow %}
+        {% endplaceholder %}
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+        {% placeholder "footer-bottom" global %}
+            {% row %}
+                {% plugin "text" %}
+                    text = "* Copyright 2016 - Demo company"
+                {% endplugin %}
+            {% endrow %}
+        {% endplaceholder %}
+        </div>
+    </div>
+</footer>
+{% endmacro %}
+
+{% macro product_box(product, show_image=True, show_description=False, class="product-card", thumbnail_size=(500,500), shop=None) %}
+    {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
+    {% if product.is_variation_parent() %}
+        {% set price_info = product.get_cheapest_child_price_info(request) %}
+    {% else %}
+        {% set price_info = product.get_price_info(request) %}
+    {% endif %}
+    <div class="{{ class }}" id="product-{{ product.id }}">
+        <div class="overlay">
+            <button type="button" class="btn btn-preview" onclick="javascript:showPreview('{{ product.id }}')"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
+        </div>
+        <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
+            {% if price_info.is_discounted %}
+                <div class="labels">
+                    <span class="sale-badge">{{ -price_info.discount_rate|percent }}</span>
+                </div>
+            {% endif %}
+            {% if show_image %}
+                <div class="product-image">
+                    {% if product.primary_image %}
+                        {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size, crop='smart', upscale=True) %}
+                        <img src="{{ primary_image_thumb }}" class="primary-image" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image.png" class="no-image" alt="{{ product.name }}">
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="detail-wrap">
+                <div class="name">{{ product.name }}</div>
+                {% if show_description and product.description %}
+                    <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+                {% endif %}
+                <div class="price">
+                    {{ render_product_price(product, price_info) }}
+                </div>
+                {% if shop %}<p class="shop">{{ shop }}</p>{% endif %}
+            </div>
+        </a>
+    </div>
+{% endmacro %}
+
+{% extends "shuup/front/macros/theme_navigation.jinja" %}

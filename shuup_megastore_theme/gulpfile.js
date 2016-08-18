@@ -34,7 +34,7 @@ gulp.task("js", function() {
         "bower_components/jquery-easing/jquery.easing.min.js",
         "bower_components/owl.carousel/dist/owl.carousel.min.js",
         "bower_components/jquery-touchswipe/jquery.touchSwipe.min.js",
-        "static_src/js/vendor/image-lightbox.js",
+        "static_src/js/vendor/imagelightbox.js",
         "static_src/js/custom/custom.js",
         "static_src/js/custom/checkout.js"
     ])

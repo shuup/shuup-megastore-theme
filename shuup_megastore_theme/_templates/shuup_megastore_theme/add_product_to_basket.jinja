@@ -1,4 +1,4 @@
-<div class="cart-indicator" id="cart-indicator">
+<div class="cart-indicator">
     <div class="success-msg">
         <i class="fa fa-check"></i>
         <p>{% trans %}Product added to cart{% endtrans %}</p>
@@ -15,7 +15,7 @@
             url: "{{ url('shuup:xtheme_extra_view', view='basket_partial') }}",
             method: "GET",
             success: function(basket_html) {
-                $("#navigation-basket-partial").html(basket_html);
+                $(".dropdown.cart").html(basket_html);
             }
         });
     }

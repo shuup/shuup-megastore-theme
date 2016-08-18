@@ -1,0 +1,57 @@
+{% macro render_navigation() %}
+<nav class="navbar navbar-static-top site-nav" role="navigation">
+    <div class="top-nav">
+        <div class="container">
+            <ul class="nav-left">
+                <li><span class="text hidden-xs">
+                    {% placeholder "top-nav-text" global %}{% endplaceholder %}
+                    </span>
+                </li>
+            </ul>
+            <ul class="nav-right">
+                {{ _render_info_dropdown() }}
+
+                {{ render_basket_partial(request.basket) }}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="support-nav">
+        <div class="container">
+             <ul class="nav navbar-nav navbar-left">
+                <li class="logo">
+                    <a href="/" data-toggle="tooltip" data-placement="bottom" title="{{ request.shop }} {% trans %}Home{% endtrans %}">
+                    {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+                        <img src="{%- if cropped_logo -%}
+                            {{ cropped_logo }}
+                                {%- else -%}
+                            {{ STATIC_URL }}shuup_megastore_theme/img/mega_logo.png
+                                {%- endif -%}" class="desktop" alt="{{ request.shop }} Logo">
+                    </a>
+                </li>
+                <li class="support-nav-text">
+                    {% placeholder "support-nav-text" global %}{% endplaceholder %}
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-toggler" id="nav-toggler">
+                    <span class="hamburger"></span>
+                </li>
+                <li class="dropdown">
+                    <div class="hidden-xs hidden-sm">
+                        <form method="get" action="{{ url("shuup:product_search") }}" class="search-form" role="search">
+                            <div class="form-group">
+                                <input type="search" name="q" class="form-control" placeholder="{% trans %}Search{% endtrans %}" required>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endmacro %}
+
+{% extends "shuup/front/macros/theme_category.jinja" %}

@@ -1,0 +1,41 @@
+{% macro render_category_information() %}
+    {% placeholder "category_top_extra" %}{% endplaceholder %}
+{% endmacro %}
+
+{% macro render_products() %}
+    <div class="product-list">
+        <div class="category-header">
+            <div class="child-categories">
+                {% for child_cat in category.get_children() if child_cat.is_visible(customer=request.customer) %}
+                    <a href="{{ shuup.urls.model_url(child_cat) }}" class="child-category">{{ child_cat.name }}</a>
+                {% endfor %}
+            </div>
+            <form role="form" class="form-inline" method="get" action="" id="sorter">
+                <div class="form-group selectpicker">
+                    {{ form.sort|safe }}
+                </div>
+            </form>
+        </div>
+        <div id="ajax_content">
+        {% block ajax_content %}
+            <div class="products grid row">
+                {% set pagination = shuup.general.get_pagination_variables(products, 20) %}
+                {% for product in pagination.objects if shuup.product.is_visible(product) %}
+                    {{ macros.product_box(product, class="product-card category-view") }}
+                {% endfor %}
+            </div>
+            {% if pagination.is_paginated %}
+                <div class="clearfix">
+                    {{ macros.pagination(pagination.page, pagination.paginator) }}
+                </div>
+            {% endif %}
+        {% endblock %}
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+
+
+{% extends "shuup/front/macros/theme_product.jinja" %}

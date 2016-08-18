@@ -14,23 +14,24 @@
 <body>
     <div class="content-wrap">
         <div id="main" class="clear-top">
-        {% if messages %}
-            <div class="message-wrapper">
-                {% for message in messages %}
-                    <div class="container">
-                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="{% trans %}Close{% endtrans %}"><span aria-hidden="true">&times;</span></button>
-                            {{ message }}
+            {% if messages %}
+                <div class="message-wrapper">
+                    {% for message in messages %}
+                        <div class="container">
+                            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="{% trans %}Close{% endtrans %}"><span aria-hidden="true">&times;</span></button>
+                                {{ message }}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-        <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="{% trans %}Scroll to top{% endtrans %}">
-            <i class="fa fa-angle-up"></i>
-        </a>
-            {{ macros.render_navigation() }}
+            <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="{% trans %}Scroll to top{% endtrans %}">
+                <i class="fa fa-angle-up"></i>
+            </a>
+
+            {% include "shuup/front/includes/_navigation.jinja" %}
 
             <div class="container">
                 <div class="row">
@@ -59,14 +60,15 @@
             </div>
         </div>
 
-        {# include "shuup/front/includes/_footer.jinja" #}
-    {{ macros.render_footer() }}
+        {% include "shuup/front/includes/_footer.jinja" %}
 
     </div>
 
     <script src="{{ static("shuup_megastore_theme/js/shuup_megastore_theme.js") }}"></script>
     {% block extrajs %}{% endblock %}
-    {{ macros.add_product_to_basket("cart-indicator") }}
+    {# Enable adding products to basket with ajax #}
+    {# include "shuup_megastore_theme/add_product_to_basket.jinja" #}
+    {{ macros.add_product_to_basket() }}
     {% include "shuup/front/includes/_offcanvas_nav.jinja" %}
 </body>
 </html>
