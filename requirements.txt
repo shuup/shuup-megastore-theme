@@ -1,5 +1,0 @@
-#git+git://github.com/shuup/shuup@v0.4.0#egg=shuup==0.4.0
--e .
-#PyYAML==3.11
-#beautifulsoup4==4.4.1
-#git+git://github.com/shuup/shuup-carousel@v1.0.9#egg=shuup-carousel==1.0.9

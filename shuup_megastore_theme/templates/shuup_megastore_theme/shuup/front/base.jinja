@@ -1,4 +1,13 @@
-{%- import "shuup/front/macros.jinja" as macros with context -%}
+{%- import "shuup/front/macros/general.jinja" as macros with context -%}
+{%- from "shuup/front/macros/add_to_cart.jinja" import add_product_to_cart -%}
+{%- import "shuup/front/macros/basket.jinja" as basket_macros with context -%}
+{%- import "shuup/front/macros/category.jinja" as category_macros with context -%}
+{%- import "shuup/front/macros/checkout.jinja" as checkout_macros with context -%}
+{%- from "shuup/front/macros/footer.jinja" import render_footer with context %}
+{%- from "shuup/front/macros/navigation.jinja" import render_navigation with context %}
+{%- import "shuup/front/macros/order.jinja" as order_macros with context -%}
+{%- import "shuup/front/macros/product.jinja" as product_macros with context -%}
+{%- import "shuup_megastore_theme/macros.jinja" as theme_macros with context %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -12,33 +21,21 @@
     <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/style.css") }}">
 </head>
 <body>
-
     <div class="content-wrap">
         <div id="main" class="clear-top">
+            {{ macros.render_maintenance_mode_notification() }}
+            {{ macros.render_messages() }}
+            {{ macros.render_errors() }}
 
-        {% if messages %}
-            <div class="message-wrapper">
-                {% for message in messages %}
-                    <div class="container">
-                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="{% trans %}Close{% endtrans %}"><span aria-hidden="true">&times;</span></button>
-                            {{ message }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+            <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="{% trans %}Scroll to top{% endtrans %}">
+                <i class="fa fa-angle-up"></i>
+            </a>
 
-        <a href="#" id="scroll_top" class="scroll-top-btn" data-toggle="tooltip" data-placement="left" title="{% trans %}Scroll to top{% endtrans %}">
-            <i class="fa fa-angle-up"></i>
-        </a>
-
-        {% include "shuup/front/includes/_navigation.jinja" %}
-
+             {{ render_navigation() }}
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        {% include "shuup/front/includes/megamenu.jinja" with context %}
+                        {{ theme_macros.render_megamenu() }}
                     </div>
                     <div class="col-md-9">
                         {% block banner %}{% endblock %}
@@ -61,15 +58,13 @@
                 </div>
             </div>
         </div>
-
-        {% include "shuup/front/includes/_footer.jinja" %}
-
+        {{ render_footer() }}
     </div>
-
+    <script src="{{ static("shuup/front/js/scripts.js") }}"></script>
     <script src="{{ static("shuup_megastore_theme/js/shuup_megastore_theme.js") }}"></script>
+
     {% block extrajs %}{% endblock %}
-    {# Enable adding products to basket with ajax #}
-    {% include "shuup_megastore_theme/add_product_to_basket.jinja" %}
-    {% include "shuup/front/includes/_offcanvas_nav.jinja" %}
+    {{ add_product_to_cart() }}
+    {{ theme_macros.render_offcanvas_nav() }}
 </body>
 </html>

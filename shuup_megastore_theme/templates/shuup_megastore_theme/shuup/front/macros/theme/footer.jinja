@@ -1,0 +1,51 @@
+{% macro render_footer() %}
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                {% placeholder "footer-top" global %}
+                    {% row %}
+                        {% column {"md": 4, "sm": 4} %}
+                            {% plugin "category_links" %}
+                                title = "Categories"
+                                show_all_categories = false
+                            {% endplugin %}
+                        {% endcolumn %}
+                        {% column {"md": 4, "sm":4} %}
+                            {% plugin "text" %}
+                                text = "#### Store Information\n#### Order/Service\n#### Opening Times\n"
+                            {% endplugin %}
+                        {% endcolumn %}
+                        {% column {"md": 4, "sm":4} %}
+                            {% plugin "social_media_links" %}
+                                topic = "Follow Us"
+                                icon_size = "3x"
+                                alignment = "center"
+                                [links]
+                                    [links.Twitter]
+                                        url = "https://twitter.com/shuupcom"
+                                        ordering = "1"
+                                    [links.Facebook]
+                                        url = "https://www.facebook.com/shoop.io"
+                                        ordering = "2"
+                                    [links.Instagram]
+                                        url = "https://www.instagram.com/shuupcom/"
+                                        ordering = "3"
+                            {% endplugin %}
+                        {% endcolumn %}
+                    {% endrow %}
+                {% endplaceholder %}
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                {% placeholder "footer-bottom" global %}
+                    {% row %}
+                        {% plugin "text" %}
+                            text = "* Copyright 2016 - Demo company"
+                        {% endplugin %}
+                    {% endrow %}
+                {% endplaceholder %}
+            </div>
+        </div>
+    </footer>
+{% endmacro %}

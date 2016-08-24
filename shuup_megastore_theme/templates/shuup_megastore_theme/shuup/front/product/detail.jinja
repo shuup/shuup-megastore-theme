@@ -1,45 +1,31 @@
 {% extends "shuup/front/base.jinja" %}
 
-{% if product.is_variation_parent()  %}
-    {% set priceinfo = product.get_cheapest_child_price_info(request) %}
-{% else %}
-    {% set priceinfo = product.get_price_info(request) %}
-{% endif %}
-
-{% block extrameta %}
-    <meta property="og:site_name" content="{{ request.shop }}">
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="{{ shuup.urls.model_url(product, absolute=True) }}">
-    <meta property="og:title" content="{{ product.name }}">
-    {% if primary_image %}
-        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
-    {% endif %}
-{% endblock %}
+{% block extrameta %}{{ product_macros.render_open_graph_metadata(product) }}{% endblock %}
 
 {% block title %}{{ product.name }}{% endblock %}
+
 {% block content_title %}{% endblock %}
 
 {% block breadcrumb %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
-            {% set category = shop_product.primary_category %}
-            {% if category %}
-                {% for c in category.get_ancestors(include_self=True) if c.is_visible(customer=request.customer) %}
-                    <li><a href="{{ shuup.urls.model_url(c) }}">{{ c.name }}</a></li>
-                {% endfor %}
-            {% endif %}
-            <li class="active">{{ product.name }}</li>
-        </ol>
-    </div>
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {% set category = shop_product.primary_category %}
+        {% if category %}
+            {% for c in category.get_ancestors(include_self=True) if c.is_visible(customer=request.customer) %}
+                {{ macros.render_breadcrumb_item(shuup.urls.model_url(c), c.name) }}
+            {% endfor %}
+        {% else %}
+            {{ macros.render_breadcrumb_item(url('shuup:xtheme_extra_view', view='products'), _("Products")) }}
+        {% endif %}
+        {{ macros.render_breadcrumb_item(None, product.name, True) }}
+    {% endcall %}
 {% endblock %}
 
 {% block content %}
     <div class="product-page">
         <div class="row">
-
             <div class="product-image col-md-6">
-                {% include "shuup/front/product/_product_image.jinja" %}
+                {{ product_macros.render_product_image_section(product) }}
             </div>
 
             <div class="product-info col-md-6">
@@ -63,13 +49,9 @@
                         <td><span class="discount-color">{{ product|discount_amount }} ({{ product|discount_percent }})</span></td>
                     </tr>
                     </table>
-{#                    Discounted Price: {{ product|price }}.<br>#}
-{#                    You Save: {{ product|discount_amount }} ({{ product|discount_percent }})<br>#}
-                {% else %}
                 {% endif %}
-{#                <hr>#}
                 <div id="product-price-section">
-                    {% include "shuup/front/product/_detail_order_section.jinja" with context %}
+                    {{ product_macros.render_product_order_section(product) }}
                 </div>
                 <div class="review">
                     <p>{% trans %}Product review{% endtrans %}</p>
@@ -105,31 +87,7 @@
             </div>
         </div>
 
-        <div class="product-tabs" role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><i class="fa fa-file-text-o"></i>{% trans %}Details{% endtrans %}</a></li>
-                {% if shuup.product.get_visible_attributes(product) %}
-                    <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"><i class="fa fa-tags"></i>{% trans %}Technical information{% endtrans %}</a></li>
-                {% endif %}
-                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"><i class="fa fa-mail-reply"></i>{% trans %}Delivery & refund terms{% endtrans %}</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
-                    {% include "shuup/front/product/_detail_details_section.jinja" %}
-                </div>
-                {% if shuup.product.get_visible_attributes(product) %}
-                    <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
-                        {% include "shuup/front/product/_detail_attributes_section.jinja" %}
-                    </div>
-                {% endif %}
-                <div role="tabpanel" class="product-attributes tab-pane fade" id="tab4">
-                        <b>Delivery terms</b>
-                        <br>Free delivery within 3-6 working days<br><br>
-                        <b>Refund terms</b>
-                        <br>If you are not satisfied with the product, you may return it for a refund within 30 days of receiving the order.
-                </div>
-            </div>
-        </div>
+        {{ product_macros.render_product_information(product) }}
 
         {% if package_children %}
             <section class="carousel-section">
@@ -138,7 +96,7 @@
                 </div>
                 <div class="product-carousel owl-carousel five">
                     {% for child in package_children %}
-                        {{ macros.product_box(child, show_description=False) }}
+                        {{ product_macros.product_box(child, show_description=False) }}
                     {% endfor %}
                 </div>
             </section>
@@ -149,78 +107,17 @@
                 </div>
                 <div class="product-carousel owl-carousel five">
                     {% for parent in package_parents %}
-                        {{ macros.product_box(parent, show_description=False) }}
+                        {{ product_macros.product_box(parent, show_description=False) }}
                     {% endfor %}
                 </div>
             </section>
         {% endif %}
 
-        {{ macros.render_cross_sell_products(
-            product, relation_type="computed", title=_("Users who bought this product also bought")
-        ) }}
-
-        {{ macros.render_cross_sell_products(
-            product, relation_type="recommended", title=_("We recommend these products")
-        ) }}
-
-        {{ macros.render_cross_sell_products(
-            product, relation_type="related", title=_("Related products")
-        ) }}
+        {{ product_macros.render_product_placeholder_section() }}
     </div>
 
 {% endblock %}
 
 {% block extrajs %}
-    <script>
-        $(function() {
-            // Enable lightbox for products with multiple images. Uses arrows to
-            // navigate through images.
-            var selector_multiple = "a[data-imagelightbox='image-multiple']";
-            var instance_multiple = $(selector_multiple).imageLightbox({
-                "onStart": function() {
-                    overlayOn();
-                    closeButtonOn(instance_multiple);
-                    arrowsOn(instance_multiple, selector_multiple);
-                },
-                "onEnd": function() {
-                    overlayOff();
-                    closeButtonOff();
-                    arrowsOff();
-                },
-                "onLoadStart": function() {
-                    activityIndicatorOn();
-                },
-                "onLoadEnd": function() {
-                    $(".imagelightbox-arrow").css("display", "block");
-                    activityIndicatorOff();
-                }
-            });
-
-            // Enable lightbox for products with only one image.
-            var selector = "a[data-imagelightbox='image']";
-            var instance = $(selector).imageLightbox({
-                "onStart": function() {
-                    overlayOn();
-                    closeButtonOn(instance);
-                },
-                "onEnd": function() {
-                    overlayOff();
-                    closeButtonOff();
-                },
-                "onLoadStart": function() {
-                    activityIndicatorOn();
-                },
-                "onLoadEnd": function() {
-                    $(".imagelightbox-arrow").css("display", "block");
-                    activityIndicatorOff();
-                }
-            });
-
-            // Hide carousel arrows if there is only one product image
-            var imageCount = $(".product-carousel").find(".item").length;
-            if (imageCount < 2) {
-                $(".arrow-control-wrap").hide();
-            };
-        });
-    </script>
+    {{ product_macros.render_extrajs() }}
 {% endblock %}
