@@ -10,7 +10,7 @@ except ImportError:
 if __name__ == '__main__':
     setuptools.setup(
         name="shuup_megastore_theme",
-        version="1.0.5",
+        version="1.0.6",
         description="Shuup Megastore Theme",
         packages=setuptools.find_packages(),
         include_package_data=True,
