@@ -18,7 +18,7 @@
     <link rel="icon" type="image/x-icon" href="{{ static("shuup_megastore_theme/img/favicon.ico") }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|Open+Sans:400,600">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300,500">
-    <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/style.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/shuup_megastore_theme.css") }}?v=0.0.1">
 </head>
 <body>
     <div class="content-wrap">
@@ -60,8 +60,8 @@
         </div>
         {{ render_footer() }}
     </div>
-    <script src="{{ static("shuup/front/js/scripts.js") }}"></script>
-    <script src="{{ static("shuup_megastore_theme/js/shuup_megastore_theme.js") }}"></script>
+    <script src="{{ static("shuup/front/js/scripts.js") }}"?v=0.0.1"></script>
+    <script src="{{ static("shuup_megastore_theme/js/shuup_megastore_theme.js") }}?v=0.0.1"></script>
 
     {% block extrajs %}{% endblock %}
     {{ add_product_to_cart() }}

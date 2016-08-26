@@ -1,4 +1,4 @@
-{% macro add_product_to_basket(main_class="cart-indicator") %}
+{% macro add_product_to_cart(main_class="cart-indicator") %}
     <div class="cart-indicator" id="cart-indicator">
         <div class="success-msg">
             <i class="fa fa-check"></i>
@@ -19,6 +19,7 @@
                 url: "{{ url('shuup:xtheme_extra_view', view='basket_partial') }}",
                 method: "GET",
                 success: function(basket_html) {
+                    console.log(basket_html);
                     $("#navigation-basket-partial").replaceWith(basket_html);
                 }
             });
@@ -43,7 +44,7 @@
                         handleError(cover);
                         return;
                     }
-                    updateNavigationBasket();
+                    window.updateNavigationBasket();
                     cover.addClass("success");
                     setTimeout(function() {
                         // Hide the message

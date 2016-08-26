@@ -16,7 +16,7 @@ gulp.task("less", function() {
         .pipe(less().on("error", function() {
             this.emit("end");
         }))
-        .pipe(concat("style.css"))
+        .pipe(concat("shuup_megastore_theme.css"))
         .pipe((PRODUCTION ? minifycss() : gutil.noop()))
         .pipe(gulp.dest("static/shuup_megastore_theme/css/"));
 });
