@@ -1,4 +1,4 @@
-static/shuup_megastore_theme/css/style.css
+static/shuup_megastore_theme/css/shuup_megastore_theme.css
 static/shuup_megastore_theme/fonts/FontAwesome.otf
 static/shuup_megastore_theme/fonts/fontawesome-webfont.eot
 static/shuup_megastore_theme/fonts/fontawesome-webfont.svg
