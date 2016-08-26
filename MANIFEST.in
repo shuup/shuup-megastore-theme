@@ -1,4 +1,20 @@
 include README.rst
-include LICENSE
 
-recursive-include shuup_megastore_theme *.ico *.png *.jinja *.js *.css
+recursive-include shuup_megastore_theme \
+    *.jinja \
+    *.less *.json \
+    *.css *.js *.map \
+    *.ico *.png *.jpg *.svg \
+    *.otf *.eot *.ttf *.woff *.woff2 \
+    *.po *.mo
+
+prune shuup_megastore_theme/node_modules
+prune shuup_megastore_theme/*/node_modules
+prune shuup_megastore_theme/*/*/node_modules
+prune shuup_megastore_theme/*/*/*/node_modules
+prune shuup_megastore_theme/*/*/*/*/node_modules
+prune shuup_megastore_theme/bower_components
+prune shuup_megastore_theme/*/bower_components
+prune shuup_megastore_theme/*/*/bower_components
+prune shuup_megastore_theme/*/*/*/bower_components
+prune shuup_megastore_theme/*/*/*/*/bower_components
