@@ -1,0 +1,13 @@
+static/shuup_megastore_theme/css/style.css
+static/shuup_megastore_theme/fonts/FontAwesome.otf
+static/shuup_megastore_theme/fonts/fontawesome-webfont.eot
+static/shuup_megastore_theme/fonts/fontawesome-webfont.svg
+static/shuup_megastore_theme/fonts/fontawesome-webfont.ttf
+static/shuup_megastore_theme/fonts/fontawesome-webfont.woff
+static/shuup_megastore_theme/fonts/fontawesome-webfont.woff2
+static/shuup_megastore_theme/fonts/glyphicons-halflings-regular.eot
+static/shuup_megastore_theme/fonts/glyphicons-halflings-regular.svg
+static/shuup_megastore_theme/fonts/glyphicons-halflings-regular.ttf
+static/shuup_megastore_theme/fonts/glyphicons-halflings-regular.woff
+static/shuup_megastore_theme/fonts/glyphicons-halflings-regular.woff2
+static/shuup_megastore_theme/js/shuup_megastore_theme.js
