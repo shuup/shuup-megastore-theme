@@ -114,7 +114,7 @@
             {% if product|is_discounted %}
                 <div class="labels">
                     {% set discount_percent = product|discount_percent %}
-                    <span class="sale-badge">{{ -discount_percent }}</span>
+                    <span class="sale-badge">-{{ discount_percent }}</span>
                 </div>
             {% endif %}
             {% if show_image %}
