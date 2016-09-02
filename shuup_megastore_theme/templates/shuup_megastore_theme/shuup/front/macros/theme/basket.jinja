@@ -3,15 +3,78 @@
         <form method="post" action="{{ url("shuup:basket") }}" id="update_basket_form">
             <input name="command" type="hidden" value="update">
             {% csrf_token %}
-            {{ render_basket_lines() }}
+            <form method="post" action="{{ url("shuup:basket") }}" class="update-basket">
+              {{ render_basket_lines() }}
+              {{ render_unorderable_basket_lines() }}
+            </form>
             {{ render_coupon_div() }}
         </form>
     </div>
 {% endmacro %}
 
-{% macro render_basket_lines() %}
-    <div class="table-responsive">
-        <form method="post" action="{{ url("shuup:basket") }}" class="update-basket">
+{% macro _render_basket_line(line) %}
+    {% set product = line.product %}
+    <tr>
+        <td>
+            {% if product %}
+                {% set image = product.primary_image %}
+                {% if image %}
+                    <a class="product-name" href="{{ shuup.urls.model_url(product) }}">
+                        <img src="{{ image|thumbnail(size=(70, 70)) }}" alt="{{ line.name }}">
+                    </a>
+                {% else %}
+                    <img class="img-responsive" src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image_thumbnail.png">
+                {% endif %}
+            {% endif %}
+        </td>
+        <td>
+            {% if product %}
+                <a class="product-name" href="{{ shuup.urls.model_url(product) }}">{{ line.text }}</a>
+            {% else %}
+                {{ line.text }}
+            {% endif %}
+        </td>
+        <td class="text-right">
+            {{ line.discounted_unit_price|money }}
+            {% if line.is_discounted %}
+                <small style="display: block">
+                    <s>{{ line.base_unit_price|money }}</s>
+                </small>
+            {% endif %}
+        </td>
+        <td class="text-right">
+            {% if product and line.can_change_quantity %}
+                <input
+                    type="number"
+                    name="q_{{ line.line_id }}"
+                    size="2"
+                    class="line_quantity text-right form-control"
+                    {% if product.sales_unit.allow_fractions %}
+                        step="0.01"
+                        pattern="[0-9]+([\.|,][0-9]+)?"
+                    {% else %}
+                        step="{{ product.package_size }}"
+                    {% endif %}
+                    min="1"
+                    value="{{ line.quantity }}">
+            {% endif %}
+        </td>
+        <td class="text-right">
+            <span class="line-total">{{ line.price|money }}</span>
+        </td>
+        <td class="del-basket-line-form">
+            {% if line.can_delete %}
+                <button type="submit" class="btn btn-danger btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
+                    <i class="fa fa-times"></i>
+                </button>
+            {% endif %}
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro _render_basket_lines(lines, orderable) %}
+    {% if lines %}
+        <div class="table-responsive">
             <input name="command" type="hidden" value="update">
             {% csrf_token %}
             <table class="table basket-table">
@@ -25,6 +88,7 @@
                         <th></th>
                     </tr>
                 </thead>
+                {% if orderable %}
                 <tfoot>
                     <tr>
                         <td colspan="4" class="text-right">
@@ -39,68 +103,32 @@
                         <td></td>
                     </tr>
                 </tfoot>
+                {% endif %}
                 <tbody>
-                    {% for line in basket.get_final_lines() %}
-                        {% set product = line.product %}
-                        <tr>
-                            <td>
-                                {% if product %}
-                                    {% set image = product.primary_image %}
-                                    {% if image %}
-                                        <a class="product-name" href="{{ shuup.urls.model_url(product) }}">
-                                            <img src="{{ image|thumbnail(size=(70, 70)) }}" alt="{{ line.name }}">
-                                        </a>
-                                    {% else %}
-                                        <img class="img-responsive" src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image_thumbnail.png">
-                                    {% endif %}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if product %}
-                                    <a class="product-name" href="{{ shuup.urls.model_url(product) }}">{{ line.text }}</a>
-                                {% else %}
-                                    {{ line.text }}
-                                {% endif %}
-                            </td>
-                            <td class="text-right">
-                                {{ line.discounted_unit_price|money }}
-                                {% if line.is_discounted %}
-                                    <small style="display: block">
-                                        <s>{{ line.base_unit_price|money }}</s>
-                                    </small>
-                                {% endif %}
-                            </td>
-                            <td class="text-right">
-                                {% if product and line.can_change_quantity %}
-                                    <input
-                                        type="number"
-                                        name="q_{{ line.line_id }}"
-                                        size="2"
-                                        class="line_quantity text-right form-control"
-                                        {% if product.sales_unit.allow_fractions %}
-                                            step="0.01"
-                                            pattern="[0-9]+([\.|,][0-9]+)?"
-                                        {% else %}
-                                            step="{{ product.package_size }}"
-                                        {% endif %}
-                                        min="1"
-                                        value="{{ line.quantity }}">
-                                {% endif %}
-                            </td>
-                            <td class="text-right">
-                                <span class="line-total">{{ line.price|money }}</span>
-                            </td>
-                            <td class="del-basket-line-form">
-                                {% if line.can_delete %}
-                                    <button type="submit" class="btn btn-danger btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                {% endif %}
-                            </td>
-                        </tr>
+                    {% for line in lines %}
+                        {{ _render_basket_line(line) }}
                     {% endfor %}
                 </tbody>
             </table>
-        </form>
-    </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_basket_lines() %}
+    {% set lines = basket.get_final_lines() %}
+    {% if lines %}
+        <div class="basket-lines">
+            {{ _render_basket_lines(lines, True) }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_unorderable_basket_lines() %}
+    {% set unorderable_lines = basket.get_unorderable_lines() %}
+    {% if unorderable_lines %}
+        <div class="basket-unorderable-lines">
+            <p class="text-danger">{% trans %}The following items are not currently available (or are not available in the desired quantity) and cannot be included in your order.{% endtrans %}</p>
+            {{ _render_basket_lines(unorderable_lines, False) }}
+        </div>
+    {% endif %}
 {% endmacro %}
