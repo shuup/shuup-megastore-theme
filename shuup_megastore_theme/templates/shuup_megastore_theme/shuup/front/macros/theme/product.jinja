@@ -10,7 +10,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
                 {% if product.description %}
-                    {{ product.description|markdown|safe }}
+                    {{ product.description|safe }}
                 {% else %}
                     {% trans %}No product description available.{% endtrans %}
                 {% endif %}
