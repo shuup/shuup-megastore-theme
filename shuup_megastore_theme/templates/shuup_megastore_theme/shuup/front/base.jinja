@@ -23,7 +23,7 @@
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     {% endif %}
 </head>
-<body>
+<body{% if request.user and request.user.is_superuser %} class="admin-tools-visible"{% endif %}>
     <div class="content-wrap">
         <div id="main" class="clear-top">
             {{ macros.render_maintenance_mode_notification() }}
