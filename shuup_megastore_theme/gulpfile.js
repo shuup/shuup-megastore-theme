@@ -9,7 +9,7 @@ var PRODUCTION = gutil.env.production || process.env.NODE_ENV === "production";
 
 gulp.task("less", function() {
     return gulp.src([
-        "bower_components/owl.carousel/dist/assets/owl.carousel.min.css",
+        "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
         "static_src/less/style.less"
     ])
         .pipe(plumber({}))
@@ -21,14 +21,14 @@ gulp.task("less", function() {
         .pipe(gulp.dest("static/shuup_megastore_theme/css/"));
 });
 
-gulp.task("less:watch", ["less"], function() {
+gulp.task("less:watch", gulp.parallel(["less"]), function() {
     gulp.watch(["static_src/less/**/*.less"], ["less"]);
 });
 
 gulp.task("js", function() {
     return gulp.src([
+        "node_modules/jquery-zoom/jquery.zoom.js",
         "static_src/js/custom/custom.js"
-
     ])
         .pipe(plumber({}))
         .pipe(concat("shuup_megastore_theme.js"))
@@ -36,17 +36,17 @@ gulp.task("js", function() {
         .pipe(gulp.dest("static/shuup_megastore_theme/js/"));
 });
 
-gulp.task("js:watch", ["js"], function() {
+gulp.task("js:watch", gulp.parallel(["js"]), function() {
     gulp.watch(["static_src/js/**/*.js"], ["js"]);
 });
 
 gulp.task("copy_fonts", function() {
     return gulp.src([
-        "bower_components/bootstrap/fonts/*",
-        "bower_components/font-awesome/fonts/*"
+        "node_modules/bootstrap/fonts/*",
+        "node_modules/font-awesome/fonts/*"
     ]).pipe(gulp.dest("static/shuup_megastore_theme/fonts/"));
 });
 
-gulp.task("default", ["js", "less", "copy_fonts"]);
+gulp.task("default", gulp.parallel(["js", "less", "copy_fonts"]));
 
-gulp.task("watch", ["js:watch", "less:watch"]);
+gulp.task("watch", gulp.parallel(["js:watch", "less:watch"]));
