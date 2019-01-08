@@ -6,6 +6,9 @@
   "scripts": {
     "build": "npm i && bower --config.interactive=false i && gulp"
   },
+  "shuup": {
+    "static_build": true
+  },
   "author": "",
   "license": "Proprietary",
   "private": true,

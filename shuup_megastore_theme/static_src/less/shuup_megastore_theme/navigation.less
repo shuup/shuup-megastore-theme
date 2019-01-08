@@ -771,3 +771,39 @@
         }
     }
 }
+
+.navbar-admin-tools {
+    .navbar-brand {
+        width: 100%;
+        position: absolute;
+
+        h2 {
+            font-size: 2rem;
+            float: left;
+            padding: 0;
+            margin: 0 10px 0 0;
+        }
+        .admin-tools-info {
+            float: left;
+            position: relative;
+
+            .badge {
+                font-size: 1rem;
+
+                &.badge-warning {
+                    background-color: @brand-danger;
+                }
+            }
+
+            i {
+                margin-left: 10px;
+            }
+            .fa-eye-slash {
+                color: @brand-danger;
+            }
+            .fa-eye {
+                color: @brand-success;
+            }
+        }
+    }
+}
