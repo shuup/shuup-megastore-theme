@@ -45,7 +45,7 @@
                 <div class="products grid row">
                     {% set pagination = shuup.general.get_pagination_variables(products, 20) %}
                     {% for product in pagination.objects if shuup.product.is_visible(product) %}
-                        {{ product_macros.product_box(product, class="category-view") }}
+                        {{ product_macros.product_box(product, class="category-view", supplier=supplier) }}
                     {% endfor %}
                 </div>
                 {% if pagination.is_paginated %}

@@ -1,4 +1,5 @@
 {% extends "shuup/front/base.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_supplier_info %}
 
 {% block extrameta %}{{ macros.render_metadata(product, product.name, product.short_description, "product") }}{% endblock %}
 
@@ -22,6 +23,8 @@
 {% endblock %}
 
 {% block content %}
+    {% set supplier = supplier or shop_product.get_supplier() %}
+    {% set show_supplier_info = (supplier and xtheme.get("show_supplier_info")) %}
     <div class="product-page">
         <div class="row">
             <div class="product-image col-md-6">
@@ -29,29 +32,30 @@
             </div>
 
             <div class="product-info col-md-6">
-                <h1>{{ product.name }}</h1>
+                <h1 class="product-name{% if show_supplier_info %} show-supplier-info{% endif %}">{{ product.name }}</h1>
+                {%  if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
                 <div class="sku">
                     <p class="text-muted"><small>{{ product.sku }}</small> / <small>{{ product.manufacturer.name }}</small></p>
                 </div>
 
-                {% if product|is_discounted %}
+                {% if product|is_discounted(supplier=supplier) %}
                     <table class="table table-prices">
                     <tr>
                         <td class="text-right">{{ _("List Price") }}:</td>
-                        <td><span class="original-price">{{ product|base_price }}</span></td>
+                        <td><span class="original-price">{{ product|base_price(supplier=supplier) }}</span></td>
                     </tr>
                     <tr>
                         <td class="text-right">{{ _("Discounted Price") }}:</td>
-                        <td><span class="discounted-price discount-color">{{ product|price }}</span></td>
+                        <td><span class="discounted-price discount-color">{{ product|price(supplier=supplier)  }}</span></td>
                     </tr>
                     <tr>
                         <td class="text-right">{{ _("You Save") }}:</td>
-                        <td><span class="discount-color">{{ product|discount_amount }} ({{ product|discount_percent }})</span></td>
+                        <td><span class="discount-color">{{ product|discount_amount(supplier=supplier)  }} ({{ product|discount_percent(supplier=supplier) }})</span></td>
                     </tr>
                     </table>
                 {% endif %}
                 <div id="product-price-section">
-                    {{ product_macros.render_product_order_section(product) }}
+                    {{ product_macros.render_product_order_section(product, supplier=supplier) }}
                 </div>
                 <div class="review">
                     <p>{% trans %}Product review{% endtrans %}</p>
@@ -84,6 +88,8 @@
                         <i class="fa fa-pinterest fa-stack-1x"></i>
                     </span>
                 </div>
+
+                {% placeholder "product_price_section_extra_1" %}{% endplaceholder %}
             </div>
         </div>
 

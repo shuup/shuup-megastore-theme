@@ -1,3 +1,5 @@
+{%- from "shuup/front/macros/general.jinja" import render_supplier_info -%}
+
 {% macro render_basket_content(basket) %}
     <div class="basket-items">
         <form method="post" action="{{ url("shuup:basket") }}" id="update_basket_form">
@@ -14,6 +16,7 @@
 
 {% macro _render_basket_line(line) %}
     {% set product = line.product %}
+    {% set show_supplier_info = xtheme.get("show_supplier_info") %}
     <tr>
         <td>
             {% if product %}
@@ -30,6 +33,7 @@
         <td>
             {% if product %}
                 <a class="product-name" href="{{ shuup.urls.model_url(product) }}">{{ line.text }}</a>
+                {% if show_supplier_info %}{{ render_supplier_info(line.supplier) }}{% endif %}
             {% else %}
                 {{ line.text }}
             {% endif %}

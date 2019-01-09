@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -11,6 +12,17 @@ class ShuupMegastoreTheme(Theme):
     name = _("Shuup Megastore Theme")
     author = "Shuup Team"
     template_dir = "shuup_megastore_theme/"
+
+    fields = [
+        ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
+        ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
+        (
+            "show_supplier_info",
+            forms.BooleanField(
+                required=False, initial=False, label=_("Show supplier info"),
+                help_text=_("Show supplier name in product-box, product-detail, basket- and order-lines"))
+        )
+    ]
 
     def get_view(self, view_name):
         import shuup_megastore_theme.views as views
