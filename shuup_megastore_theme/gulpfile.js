@@ -32,7 +32,6 @@ gulp.task("js", function() {
     ])
         .pipe(plumber({}))
         .pipe(concat("shuup_megastore_theme.js"))
-        .pipe((PRODUCTION ? uglify() : gutil.noop()))
         .pipe(gulp.dest("static/shuup_megastore_theme/js/"));
 });
 
