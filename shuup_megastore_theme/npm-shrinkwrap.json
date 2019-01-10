@@ -8231,6 +8231,15 @@
         "clones": "^1.2.0"
       }
     },
+    "sass": {
+      "version": "1.16.0-dev",
+      "resolved": "https://registry.npmjs.org/sass/-/sass-1.16.0-dev.tgz",
+      "integrity": "sha512-ahtquwSFJz0ThP05Ren4eptBRdEVWkSp0UpjLiYXGB4D03waHX2zEkrfzDTM8lQO4DCG4Hl/5/9xeeIgAyA5jA==",
+      "dev": true,
+      "requires": {
+        "chokidar": "^2.0.0"
+      }
+    },
     "sax": {
       "version": "1.2.4",
       "resolved": "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz",

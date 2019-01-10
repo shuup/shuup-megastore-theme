@@ -13,7 +13,7 @@ runBuildCommands([
         cacheDir: "shuup-megastore-theme",
         outputDir: "static/shuup_megastore_theme/css",
         outputFileName: "shuup_megastore_theme.css",
-        entryFile: "static_src/less/style.less"
+        entryFile: "static_src/less/style.js"
     }),
     getParcelBuildCommand({
         cacheDir: "shuup-megastore-theme",
