@@ -8232,10 +8232,9 @@
       }
     },
     "sass": {
-      "version": "1.16.0-dev",
-      "resolved": "https://registry.npmjs.org/sass/-/sass-1.16.0-dev.tgz",
-      "integrity": "sha512-ahtquwSFJz0ThP05Ren4eptBRdEVWkSp0UpjLiYXGB4D03waHX2zEkrfzDTM8lQO4DCG4Hl/5/9xeeIgAyA5jA==",
-      "dev": true,
+      "version": "1.16.0",
+      "resolved": "https://registry.npmjs.org/sass/-/sass-1.16.0.tgz",
+      "integrity": "sha512-uJu+dH8XlyN7WCTLg1L1L49EK9mBJyNgS0qDd9NW2eb1h0EnIs50Z0Y+XFev5ae7NdHY/xi1wVnJiLLOE/ojnQ==",
       "requires": {
         "chokidar": "^2.0.0"
       }
