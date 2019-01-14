@@ -98,6 +98,12 @@ section.carousel-banner-section {
         top: 50%;
         margin-top: -15px;
     }
+    .carousel {
+        padding: 15px 20px;
+        @media (max-width: @screen-xs-max) {
+            padding: unset;
+        }
+    }
     .fa-angle-left {
         left: -25px;
         z-index: 1000;
@@ -146,4 +152,8 @@ section.carousel-banner-section {
     margin-top: 30px;
     margin-bottom: 15px;
     padding: 0 30px;
+    padding: 0 20px !important;
+    width: 94.8%;
+    margin-right: auto;
+    margin-left: auto;
 }

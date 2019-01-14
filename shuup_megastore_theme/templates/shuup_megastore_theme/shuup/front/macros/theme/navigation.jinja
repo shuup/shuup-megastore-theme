@@ -24,9 +24,6 @@
                             <img src="{%- if cropped_logo -%}{{ cropped_logo }}{%- else -%}{{ STATIC_URL }}shuup_megastore_theme/img/mega_logo.png{%- endif -%}" class="desktop" alt="{{ request.shop }} Logo">
                         </a>
                     </li>
-                    <li class="support-nav-text">
-                        {% placeholder "support-nav-text" global %}{% endplaceholder %}
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-toggler" id="nav-toggler">
@@ -43,6 +40,9 @@
                         </div>
                     </li>
                 </ul>
+                <div class="support-nav-text">
+                    {% placeholder "support-nav-text" global %}{% endplaceholder %}
+                </div>
             </div>
         </div>
     </nav>
