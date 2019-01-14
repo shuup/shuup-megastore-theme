@@ -127,3 +127,15 @@
 {% block extrajs %}
     {{ product_macros.render_extrajs() }}
 {% endblock %}
+
+{% block post_navigation_content %}
+    <div class="container">
+        {% placeholder "product-content-top" %}{% endplaceholder %}
+    </div>
+{% endblock %}
+
+{% block post_sidebar_content %}
+    <div class="container">
+        {% placeholder "product-content-bottom" %}{% endplaceholder %}
+    </div>
+{% endblock %}

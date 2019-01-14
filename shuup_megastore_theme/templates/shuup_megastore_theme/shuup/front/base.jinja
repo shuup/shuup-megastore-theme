@@ -34,8 +34,9 @@
                 <i class="fa fa-angle-up"></i>
             </a>
 
-             {{ render_navigation() }}
-            <div class="container">
+            {{ render_navigation() }}
+            {% block post_navigation_content %}{% endblock %}
+            <div class="container main-container">
                 <div class="row">
                     <div class="col-md-3">
                         {{ theme_macros.render_megamenu() }}
@@ -60,6 +61,7 @@
                     {% block carousels %}{% endblock %}
                 </div>
             </div>
+            {% block post_sidebar_content %}{% endblock %}
         </div>
         {{ render_footer() }}
     </div>
