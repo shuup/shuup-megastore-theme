@@ -18,7 +18,7 @@
     <link rel="icon" type="image/x-icon" href="{{ static("shuup_megastore_theme/img/favicon.ico") }}">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700|Open+Sans:400,600">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300,500">
-    <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/shuup_megastore_theme.css") }}?v=2.0.7">
+    <link rel="stylesheet" type="text/css" href="{{ static("shuup_megastore_theme/css/shuup_megastore_theme.css") }}?v=2.0.8">
     {% if user.is_superuser %}
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     {% endif %}
@@ -66,9 +66,9 @@
         </div>
         {{ render_footer() }}
     </div>
-    <script src="{{ static('shuup/front/js/vendor.js') }}?v=2.0.7"></script>
-    <script src="{{ static('shuup/front/js/scripts.js') }}"?v=2.0.7"></script>
-    <script src="{{ static('shuup_megastore_theme/js/shuup_megastore_theme.js') }}?v=2.0.7"></script>
+    <script src="{{ static('shuup/front/js/vendor.js') }}?v=2.0.8"></script>
+    <script src="{{ static('shuup/front/js/scripts.js') }}"?v=2.0.8"></script>
+    <script src="{{ static('shuup_megastore_theme/js/shuup_megastore_theme.js') }}?v=2.0.8"></script>
 
     {% block extrajs %}{% endblock %}
     {{ add_product_to_cart() }}
