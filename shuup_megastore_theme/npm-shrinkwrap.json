@@ -8384,6 +8384,14 @@
         }
       }
     },
+    "simplelightbox": {
+      "version": "1.15.1",
+      "resolved": "https://registry.npmjs.org/simplelightbox/-/simplelightbox-1.15.1.tgz",
+      "integrity": "sha512-x5BBJKE/nIlew6yNluwCGQgAcvktFiLDGNyF5Ndq0QbICE8sDOcPgWsJUAEDjLOk9PT4Yd4SyngHsFu9FemjAg==",
+      "requires": {
+        "jquery": ">=1.7.0"
+      }
+    },
     "slash": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/slash/-/slash-1.0.0.tgz",

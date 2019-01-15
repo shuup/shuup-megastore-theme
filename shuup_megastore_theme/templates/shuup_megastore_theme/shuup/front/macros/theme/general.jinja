@@ -1,4 +1,4 @@
-{% macro render_pagination(page, paginator) %}
+{% macro render_pagination(page, paginator, page_range=None, show_details=True) %}
     <script>
         window.PAGE_NUMBER = "{{ page.number }}";
     </script>
@@ -6,7 +6,7 @@
         <ul class="pager">
             {% if page.has_previous() %}
                 <li id="previous_page">
-                    <a href="#" onclick="moveToPage({{ page.previous_page_number()}}); return false;">
+                    <a href="#" onclick="refreshFilters({{ page.previous_page_number()}}); return false;">
                         <i class="fa fa-angle-left"></i> {% trans %}Previous{% endtrans %}
                     </a>
                 </li>
@@ -20,7 +20,7 @@
             </li>
             {% if page.has_next() %}
                 <li id="next_page">
-                    <a href="#" onclick="moveToPage({{ page.next_page_number() }}); return false;">
+                    <a href="#" onclick="refreshFilters({{ page.next_page_number() }}); return false;">
                         {% trans %}Next{% endtrans %} <i class="fa fa-angle-right"></i>
                     </a>
                 </li>

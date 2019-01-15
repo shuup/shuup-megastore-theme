@@ -1,11 +1,34 @@
 {% macro render_product_information(product) %}
     <div class="product-tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><i class="fa fa-file-text-o"></i>{% trans %}Details{% endtrans %}</a></li>
+            <li role="presentation" class="active">
+                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">
+                    <i class="fa fa-file-text-o"></i>
+                    {% trans %}Details{% endtrans %}
+                </a>
+            </li>
             {% if shuup.product.get_visible_attributes(product) %}
-                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"><i class="fa fa-tags"></i>{% trans %}Technical information{% endtrans %}</a></li>
+                <li role="presentation">
+                    <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">
+                        <i class="fa fa-tags"></i>
+                        {% trans %}Technical information{% endtrans %}
+                    </a>
+                </li>
             {% endif %}
-            <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"><i class="fa fa-mail-reply"></i>{% trans %}Delivery & refund terms{% endtrans %}</a></li>
+            {% if xtheme.get("show_product_review") %}
+                <li role="presentation">
+                    <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">
+                        <i class="fa fa-star"></i>
+                        {% trans %}Product reviews{% endtrans %}
+                    </a>
+                </li>
+            {% endif %}
+            <li role="presentation">
+                <a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">
+                    <i class="fa fa-mail-reply"></i>
+                    {% trans %}Delivery & refund terms{% endtrans %}
+                </a>
+            </li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
@@ -29,7 +52,14 @@
                     </table>
                 </div>
             {% endif %}
-            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab4">
+            {% if xtheme.get("show_product_review") %}
+                <div role="tabpanel" class="product-reviews tab-pane fade" id="tab4">
+                    {% set review_product=shop_product.product %}
+                    {% set title=(reviews_tab_title or "") %}
+                    {% include "shuup_product_reviews/plugins/reviews_comments.jinja" with context %}
+                </div>
+            {% endif %}
+            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab5">
                     <b>Delivery terms</b>
                     <br>Free delivery within 3-6 working days<br><br>
                     <b>Refund terms</b>
@@ -37,57 +67,6 @@
             </div>
         </div>
     </div>
-{% endmacro %}
-
-{% macro render_product_image_section(product) %}
-    <div id="product_{{ product.id }}" class="product-carousel carousel slide" data-ride="carousel" data-interval="false">
-        <div class="carousel-inner">
-            {% for product_image in images %}
-                <div class="item{% if product_image == primary_image %} active{% endif %}">
-                    {% if loop|count > 1 %}
-                        <a data-imagelightbox="image-multiple" href="{{ product_image.url }}" rel="gallery">
-                            <img src="{{ product_image|thumbnail(size=(750, 750), crop="smart", upscale=True) }}" alt="{{ product.name }}" title="{% trans %}Click for a full-sized image{% endtrans %}">
-                        </a>
-                    {% else %}
-                        <a data-imagelightbox="image" href="{{ product_image.url }}" rel="gallery">
-                            <img src="{{ product_image|thumbnail(size=(750, 750), crop="smart", upscale=True) }}" alt="{{ product.name }}" title="{% trans %}Click for a full-sized image{% endtrans %}">
-                        </a>
-                    {% endif %}
-                </div>
-            {% else %}
-                <div class="item active">
-                    <img class="img-responsive no-image" alt="{{ product.name }}" src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image.png">
-                </div>
-            {% endfor %}
-            <div class="arrow-control-wrap">
-                <a class="left carousel-control" href="#product_{{ product.id }}" role="button" data-slide="prev">
-                    <span class="fa fa-angle-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#product_{{ product.id }}" role="button" data-slide="next">
-                    <span class="fa fa-angle-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <ol class="carousel-indicators">
-            {% for product_image in images %}
-                {% if loop|count > 1 %}
-                    <li data-target="#product_{{ product.id }}" data-slide-to="{{ loop.index0 }}" {% if product_image == primary_image %}class="active"{% endif %}></li>
-                {% endif %}
-            {% endfor %}
-        </ol>
-    </div>
-{% endmacro %}
-
-{% macro render_extra_js() %}
-    <script>
-        // Hide carousel arrows if there is only one product image
-        var imageCount = $(".product-carousel").find(".item").length;
-        if (imageCount < 2) {
-            $(".arrow-control-wrap").hide();
-        }
-    </script>
 {% endmacro %}
 
 {% macro product_box(product, show_image=True, show_description=False, class="product-box", thumbnail_size=(500,500), shop=None, supplier=None) %}
@@ -125,16 +104,17 @@
                     <span class="sale-badge">-{{ discount_percent }}</span>
                 </div>
             {% endif %}
-            {% if show_image %}
-                <div class="product-image">
-                    {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size, crop='smart', upscale=True) %}
+            <div class="image-wrap">
+                {% if show_image %}
+                    {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
                     {% if product.primary_image and primary_image_thumb %}
-                        <img src="{{ primary_image_thumb }}" class="primary-image" alt="{{ product.name }}">
+                        {% set image_url = primary_image_thumb %}
                     {% else %}
-                        <img src="{{ STATIC_URL }}shuup_megastore_theme/img/no_image.png" class="no-image" alt="{{ product.name }}">
+                        {% set image_url = STATIC_URL ~ "shuup/front/img/no_image.png" %}
                     {% endif %}
-                </div>
-            {% endif %}
+                    <div class="image" style="background-image:url('{{ image_url }}')"></div>
+                {% endif %}
+            </div>
             <div class="detail-wrap">
                 <div class="name">
                     {{ product.name }}
@@ -143,10 +123,32 @@
                 {% if show_description and product.description %}
                     <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
                 {% endif %}
+                {% if show_user_actions %}
+                    <div class="user-list-actions">
+                        {{ render_user_actions(product) }}
+                    </div>
+                {% endif %}
+                {% if xtheme.get("show_product_review") %}
+                    {{ xtheme.render_product_review_rating(product) }}
+                {% endif %}
             </div>
             <div class="price">
                 {{ render_product_price(product, price_info, supplier=supplier) }}
             </div>
         </a>
     </div>
+{% endmacro %}
+
+{% macro render_user_actions(product) %}
+    {% if shuup.urls.has_url("shuup:comparison_view") %}
+        <div class="action">
+        {{ xtheme.get_comparison_button(product) }}
+        </div>
+    {% endif %}
+    {% if shuup.urls.has_url("shuup:personal_wishlists") %}
+        <div class="action">
+        {% set wishlist_url = url("shuup:login") if request.customer.is_anonymous else "" %}
+        {{ xtheme.get_wishlist_button(product, wishlist_url) }}
+        </div>
+    {% endif %}
 {% endmacro %}

@@ -2,7 +2,7 @@
 
 // Core variables and mixins
 @import "@{node}/bootstrap/less/variables.less";
-@icon-font-path: "../../node_modules/bootstrap/fonts/";
+@icon-font-path: "@{node}/bootstrap/fonts/";
 @import "shuup_megastore_theme/variables.less";
 @import "@{node}/bootstrap/less/mixins.less";
 
@@ -56,13 +56,13 @@
 // Vendor styles
 @import "@{node}/font-awesome/less/font-awesome.less";
 @import "@{node}/bootstrap-select/less/bootstrap-select.less";
-@import "vendor/image-lightbox.less";
+@import "~simplelightbox/dist/simplelightbox";
 
 // --- Font Awesome Icons ---
 @fa-path: "~font-awesome/less";
 @import "@{fa-path}/variables.less";
 // override fonts location
-@fa-font-path: "../../node_modules/font-awesome/fonts";
+@fa-font-path: "@{node}/font-awesome/fonts";
 @import "@{fa-path}/mixins.less";
 @import "@{fa-path}/path.less";
 @import "@{fa-path}/core.less";
@@ -92,3 +92,4 @@
 @import "shuup_megastore_theme/basket.less";
 @import "shuup_megastore_theme/contact_information.less";
 @import "shuup_megastore_theme/loader.less";
+@import "shuup_megastore_theme/dashboard.less";

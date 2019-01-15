@@ -1,10 +1,11 @@
 {% if request.is_ajax() %}
-    {% extends "shuup/front/base_ajax_content_only.jinja" %}
-    {% import "shuup/front/macros/general.jinja" as macros with context %}
-    {% import "shuup/front/macros/product.jinja" as product_macros with context %}
+    {% extends "shuup_megastore_theme/base_ajax_content_only.jinja" %}
 {% else %}
     {% extends "shuup/front/base.jinja" %}
 {% endif %}
+{% import "shuup/front/macros/general.jinja" as macros with context %}
+{% import "shuup/front/macros/product.jinja" as product_macros with context %}
+{% import "shuup/front/macros/category.jinja" as category_macros with context %}
 
 {% block title %}{{ category.name }}{% endblock %}
 {% block content_title %}{% endblock %}
@@ -27,6 +28,7 @@
 {% endblock %}
 
 {% block content %}
+    <script>window.PRODUCT_LIST_FILTERS = {{ form.fields.keys()|list|json }};</script>
     <div class="product-list">
         <div class="category-header">
             <div class="child-categories">
@@ -34,28 +36,42 @@
                     <a href="{{ shuup.urls.model_url(child_cat) }}" class="child-category">{{ child_cat.name }}</a>
                 {% endfor %}
             </div>
-            <form role="form" class="form-inline" method="get" action="" id="sorter">
-                <div class="form-group selectpicker">
-                    {{ form.sort|safe }}
+            <div class="row product-list-actions">
+                <div class="col-sm-4">
+                    {% if "sort" in form.fields.keys() %}
+                        {{ macros.render_field(form.sort) }}
+                    {% endif %}
                 </div>
-            </form>
+                <div class="col-sm-4">
+                    {% if "limit" in form.fields.keys() %}
+                        {{ macros.render_field(form.limit) }}
+                    {% endif %}
+                </div>
+            </div>
+            <hr class="visible-sm visible-xs">
         </div>
         <div id="ajax_content">
             {% block ajax_content %}
+                {%  set pagination = shuup.general.get_pagination_variables(products, page_size or 12) %}
                 <div class="products grid row">
-                    {% set pagination = shuup.general.get_pagination_variables(products, 20) %}
                     {% for product in pagination.objects if shuup.product.is_visible(product) %}
-                        {{ product_macros.product_box(product, class="category-view", supplier=supplier) }}
+                        {{ product_macros.product_box(
+                            product, show_description=False, class="category-view", supplier=supplier) }}
                     {% endfor %}
                 </div>
-                {% if pagination.is_paginated %}
-                    <div class="clearfix">
-                        {{ macros.render_pagination(pagination.page, pagination.paginator) }}
-                    </div>
-                {% endif %}
+                <div class="clearfix">
+                    {% if pagination.is_paginated %}
+                        {{ macros.render_pagination(pagination.page, pagination.paginator, pagination.page_range) }}
+                    {% endif %}
+                </div>
             {% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block content_under_sidebar %}
+    {{ category_macros.render_product_filters_left_side() }}
+    {% placeholder "content_under_sidebar" %}{% endplaceholder %}
 {% endblock %}
 
 {% block carousels %}
