@@ -20,10 +20,10 @@
                 {% if children %}
                     {% if c.level == 0 %}
                     <div class="mega-menu-container {% if c.id == 0 %}open{% endif %}">
-                        <a class="megamenu-main-link" href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                        <a class="megamenu-main-link" href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c.name }}</a>
                         <ul>
                             {% for c in children %}
-                                <li class="level-{{ c.level }}"><a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                                <li class="level-{{ c.level }}"><a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c.name }}</a>
                                 {% if loop.index|divisibleby(divider) %}
                                     {% if not loop.last %}
                                     </ul>
@@ -57,7 +57,7 @@
             {% for c in shuup.general.get_root_categories() recursive %}
             {% set children = c.get_children() %}
             <li class="level-{{ c.level }} is-parent is-megamenu">
-                <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>{% if children %}<span class="toggle-icon"></span>{% endif %}
+                <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c.name }}</a>{% if children %}<span class="toggle-icon"></span>{% endif %}
                 {% if children %}
                     <ul>
                         {{ loop(children) }}

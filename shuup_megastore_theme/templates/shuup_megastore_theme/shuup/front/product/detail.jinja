@@ -57,37 +57,6 @@
                 <div id="product-price-section">
                     {{ product_macros.render_product_order_section(product, supplier=supplier) }}
                 </div>
-                <div class="review">
-                    <p>{% trans %}Product review{% endtrans %}</p>
-                        <span class="yellow">
-                            <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </span>
-                    <span class="gray">
-                        <i class="fa fa-star"></i>
-                    </span>
-                    <span class="text">
-                        {% trans %}(21){% endtrans %}
-                    </span>
-                </div>
-
-                <div class="icons">
-                    <p>{% trans %}Share this page{% endtrans %}</p>
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-twitter fa-stack-1x"></i>
-                    </span>
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-facebook fa-stack-1x"></i>
-                    </span>
-                    <span class="fa-stack fa-lg">
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <i class="fa fa-pinterest fa-stack-1x"></i>
-                    </span>
-                </div>
 
                 {% placeholder "product_price_section_extra_1" %}{% endplaceholder %}
             </div>

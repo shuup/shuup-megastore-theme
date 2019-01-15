@@ -39,7 +39,8 @@
             <div class="container main-container">
                 <div class="row">
                     <div class="col-md-3">
-                        {{ theme_macros.render_megamenu() }}
+                        {% block megamenu %}{{ theme_macros.render_megamenu() }}{% endblock %}
+                        {% block content_under_sidebar %}{% endblock %}
                     </div>
                     <div class="col-md-9">
                         {% block banner %}{% endblock %}
