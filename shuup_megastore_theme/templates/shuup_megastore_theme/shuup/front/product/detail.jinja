@@ -35,7 +35,7 @@
                 <h1 class="product-name{% if show_supplier_info %} show-supplier-info{% endif %}">{{ product.name }}</h1>
                 {%  if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
                 <div class="sku">
-                    <p class="text-muted"><small>{{ product.sku }}</small> / <small>{{ product.manufacturer.name }}</small></p>
+                    <p class="text-muted"><small>{{ product.sku }}</small>{% if product.manufacturer %} / <small>{{ product.manufacturer.name }}</small>{% endif %}</p>
                 </div>
 
                 {% if product|is_discounted(supplier=supplier) %}
