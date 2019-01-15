@@ -22,6 +22,7 @@
     {% if user.is_superuser %}
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     {% endif %}
+    <script type="text/javascript" src="{{ url("shuup:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
 </head>
 <body{% if request.user and request.user.is_superuser %} class="admin-tools-visible"{% endif %}>
     <div class="content-wrap">
