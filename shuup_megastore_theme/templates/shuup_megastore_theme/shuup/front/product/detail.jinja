@@ -54,11 +54,11 @@
                     </tr>
                     </table>
                 {% endif %}
-                <div id="product-price-section">
-                    {{ product_macros.render_product_order_section(product, supplier=supplier) }}
-                </div>
-
                 {% placeholder "product_price_section_extra_1" %}{% endplaceholder %}
+                <div id="product-price-section">
+                    {{ product_macros.render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children, supplier=supplier) }}
+                </div>
+                {% placeholder "product_price_section_extra_2" %}{% endplaceholder %}
             </div>
         </div>
 

@@ -7,7 +7,7 @@
 {%- from "shuup/front/macros/navigation.jinja" import render_navigation with context %}
 {%- import "shuup/front/macros/order.jinja" as order_macros with context -%}
 {%- import "shuup/front/macros/product.jinja" as product_macros with context -%}
-{%- import "shuup_megastore_theme/macros.jinja" as theme_macros with context %}
+{%- import "shuup_megastore_theme/macros/navigation.jinja" as theme_nav_macros with context %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -40,7 +40,7 @@
             <div class="container main-container">
                 <div class="row">
                     <div class="col-md-3">
-                        {% block megamenu %}{{ theme_macros.render_megamenu() }}{% endblock %}
+                        {% block megamenu %}{{ theme_nav_macros.render_megamenu() }}{% endblock %}
                         {% block content_under_sidebar %}{% endblock %}
                     </div>
                     <div class="col-md-9">
@@ -73,6 +73,6 @@
 
     {% block extrajs %}{% endblock %}
     {{ add_product_to_cart() }}
-    {{ theme_macros.render_offcanvas_nav() }}
+    {{ theme_nav_macros.render_offcanvas_nav() }}
 </body>
 </html>

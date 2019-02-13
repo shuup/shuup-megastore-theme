@@ -1,3 +1,5 @@
+{%- from "shuup_megastore_theme/macros/basket.jinja" import render_partial_basket_supplier_info -%}
+
 {% macro render_navigation() %}
     <nav class="navbar navbar-static-top site-nav" role="navigation">
         <div class="top-nav">
@@ -46,4 +48,86 @@
             </div>
         </div>
     </nav>
+{% endmacro %}
+
+{% macro render_basket_partial_line(line) %}
+<tr>
+    <td>
+        {% set line_url = shuup.urls.model_url(line.product) %}
+        {{ line.unit.render_quantity(line.quantity) }} &times;
+        {% if line_url %}
+            <a href="{{ line_url }}">{{ line.text }}</a>
+        {% else %}
+            {{ line.text }}
+        {% endif %}
+    </td>
+    {% if show_prices() and not xtheme.get("hide_prices") %}
+        <td class="text-right">{{ line|price }}</td>
+    {% endif %}
+</tr>
+{% endmacro %}
+
+{% macro render_basket_partial(basket, id=None) %}
+    {% if show_prices() and not (xtheme.get("hide_prices") or xtheme.get("catalog_mode")) %}
+        {% set lines = request.basket.get_lines() %}
+        <li class="dropdown cart"{% if id %} id="{{ id }}"{% endif %}>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="menu-icon fa fa-shopping-cart"></i>
+                <span class="hidden-xs">{% trans %}Cart{% endtrans %}</span>
+                <span>({{ basket.smart_product_count }})</span>
+                <i class="dropdown-icon fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu cart">
+                {% if lines %}
+                    <table class="table">
+                        <colgroup>
+                            <col style="min-width: 180px;">
+                            <col style="min-width: 90px;">
+                        </colgroup>
+                        <thead class="hidden-xs hidden-sm">
+                            <tr>
+                                <th>{% trans %}Items{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>{% trans %}Total{% endtrans %}</th>
+                                <th class="text-right">{{ basket|total_price }}</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="hidden-xs hidden-sm">
+                        {% if xtheme.get("group_items_by_supplier") %}
+                            {% set groupped_lines = xtheme.group_lines_by_supplier(lines) %}
+                            {% for supplier, lines in groupped_lines.items() %}
+                                {% if supplier %}
+                                    <tr class="supplier-info-row">
+                                        <td colspan="2">
+                                            {{ render_partial_basket_supplier_info(supplier) }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% for line in lines %}
+                                    {{ render_basket_partial_line(line) }}
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% for line in lines %}
+                                {{ render_basket_partial_line(line) }}
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <a href="{{ url("shuup:basket") }}" class="btn btn-block btn-primary btn-view-cart">
+                        {% trans %}View cart{% endtrans %} <i class="fa fa-angle-double-right"></i>
+                    </a>
+                {% else %}
+                    <span class="empty-cart">
+                        <i class="fa fa-exclamation-circle text-warning"></i>
+                        {% trans %}Your shopping cart is empty.{% endtrans %}
+                    </span>
+                {% endif %}
+            </div>
+        </li>
+    {% endif %}
 {% endmacro %}

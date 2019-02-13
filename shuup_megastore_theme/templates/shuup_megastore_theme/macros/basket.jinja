@@ -1,0 +1,11 @@
+{% macro render_basket_supplier_info(supplier) %}
+    <div class="supplier-info">
+        {{ _('Products supplied by <strong class="supplier-name">{supplier_name}</strong>').format(supplier_name=supplier.name) }}
+    </div>
+{% endmacro %}
+
+{% macro render_partial_basket_supplier_info(supplier) %}
+    <div class="supplier-info">
+        {{ _('Supplied by <strong class="supplier-name">{supplier_name}</strong>').format(supplier_name=supplier.name) }}
+    </div>
+{% endmacro %}
