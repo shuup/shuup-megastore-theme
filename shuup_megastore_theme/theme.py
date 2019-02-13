@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
+
 from django import forms
 from django.conf import settings
 from django.utils.encoding import force_text
@@ -25,6 +27,14 @@ class ShuupMegastoreTheme(Theme):
                 forms.BooleanField(
                     required=False, initial=False, label=_("Show supplier info"),
                     help_text=_("Show supplier name in product-box, product-detail, basket- and order-lines"))
+            ),
+            (
+                "group_items_by_supplier",
+                forms.BooleanField(
+                    required=False, initial=False,
+                    label=_("Group items by supplier"),
+                    help_text=_("Group items by the supplier in basket and order")
+                )
             )
         ]
 
@@ -70,3 +80,10 @@ class ShuupMegastoreTheme(Theme):
             return rendered
 
         return ""
+
+    def group_lines_by_supplier(self, lines):
+        groupped_lines = defaultdict(list)
+        if lines:
+            for line in lines:
+                groupped_lines[line.supplier].append(line)
+        return groupped_lines

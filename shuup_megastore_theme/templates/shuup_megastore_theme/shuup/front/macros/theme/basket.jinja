@@ -1,4 +1,5 @@
 {%- from "shuup/front/macros/general.jinja" import render_supplier_info -%}
+{%- from "shuup_megastore_theme/macros/basket.jinja" import render_basket_supplier_info -%}
 
 {% macro render_basket_content(basket) %}
     <div class="basket-items">
@@ -16,7 +17,7 @@
 
 {% macro _render_basket_line(line) %}
     {% set product = line.product %}
-    {% set show_supplier_info = xtheme.get("show_supplier_info") %}
+    {% set show_supplier_info = (line.supplier and xtheme.get("show_supplier_info") and not xtheme.get("group_items_by_supplier")) %}
     <tr>
         <td>
             {% if product %}
@@ -109,9 +110,25 @@
                 </tfoot>
                 {% endif %}
                 <tbody>
-                    {% for line in lines %}
-                        {{ _render_basket_line(line) }}
-                    {% endfor %}
+                    {% if xtheme.get("group_items_by_supplier") %}
+                        {% set groupped_lines = xtheme.group_lines_by_supplier(lines) %}
+                        {% for supplier, lines in groupped_lines.items() %}
+                            {% if supplier %}
+                                <tr class="supplier-info-row">
+                                    <td colspan="6">
+                                        {{ render_basket_supplier_info(supplier) }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% for line in lines %}
+                                {{ _render_basket_line(line) }}
+                            {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        {% for line in lines %}
+                            {{ _render_basket_line(line) }}
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
