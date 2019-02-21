@@ -35,7 +35,10 @@
                 <i class="fa fa-angle-up"></i>
             </a>
 
-            {{ render_navigation() }}
+            {% block navigation %}
+                {{ render_navigation(show_quick_login=True) }}
+            {% endblock %}
+
             {% block post_navigation_content %}{% endblock %}
             <div class="container main-container">
                 <div class="row">
