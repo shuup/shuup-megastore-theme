@@ -1,10 +1,9 @@
 {% macro product_box(product, show_image=True, show_description=False, class="product-box", thumbnail_size=(500,500), shop=None, supplier=None) %}
-    {% set shop_product = product.get_shop_instance(request.shop) %}
+    {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
     {% if supplier %}
         {% set product_url = url("shuup:supplier-product", supplier_pk=supplier.pk, pk=product.pk, slug=product.slug) %}
     {% else %}
         {% set product_url = url("shuup:product", pk=product.pk, slug=product.slug) %}
-        {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
         {% set supplier = shop_product.get_supplier() %}
     {% endif %}
 
@@ -49,6 +48,7 @@
                     {{ product.name }}
                 </div>
                 {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
+                {% if shop_product and shop_product.available_until %}{{ render_availability_info(shop_product) }}{% endif %}
                 {% if show_description and product.description %}
                     <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
                 {% endif %}
