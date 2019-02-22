@@ -19,7 +19,6 @@
                 url: "{{ url('shuup:xtheme_extra_view', view='basket_partial') }}",
                 method: "GET",
                 success: function(basket_html) {
-                    console.log(basket_html);
                     $("#navigation-basket-partial").replaceWith(basket_html);
                 }
             });

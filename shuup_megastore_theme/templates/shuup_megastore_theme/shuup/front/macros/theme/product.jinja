@@ -1,81 +1,9 @@
-{% macro render_product_information(product) %}
-    <div class="product-tabs" role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">
-                    <i class="fa fa-file-text-o"></i>
-                    {% trans %}Details{% endtrans %}
-                </a>
-            </li>
-            {% if shuup.product.get_visible_attributes(product) %}
-                <li role="presentation">
-                    <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">
-                        <i class="fa fa-tags"></i>
-                        {% trans %}Technical information{% endtrans %}
-                    </a>
-                </li>
-            {% endif %}
-            {% if xtheme.get("show_product_review") %}
-                <li role="presentation">
-                    <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">
-                        <i class="fa fa-star"></i>
-                        {% trans %}Product reviews{% endtrans %}
-                    </a>
-                </li>
-            {% endif %}
-            <li role="presentation">
-                <a href="#tab5" aria-controls="tab5" role="tab" data-toggle="tab">
-                    <i class="fa fa-mail-reply"></i>
-                    {% trans %}Delivery & refund terms{% endtrans %}
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="product-attributes tab-pane fade in active" id="tab2">
-                {% if product.description %}
-                    {{ product.description|safe }}
-                {% else %}
-                    {% trans %}No product description available.{% endtrans %}
-                {% endif %}
-            </div>
-            {% if shuup.product.get_visible_attributes(product) %}
-                <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
-                    <table class="table table-striped table-condensed">
-                        {% for attribute in shuup.product.get_visible_attributes(product) %}
-                            <tr>
-                            {% if attribute.value is not none %}
-                                <td>{{ attribute.name }}</td>
-                                <td>{{ attribute.formatted_value }}</td>
-                            {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            {% endif %}
-            {% if xtheme.get("show_product_review") %}
-                <div role="tabpanel" class="product-reviews tab-pane fade" id="tab4">
-                    {% set review_product=shop_product.product %}
-                    {% set title=(reviews_tab_title or "") %}
-                    {% include "shuup_product_reviews/plugins/reviews_comments.jinja" with context %}
-                </div>
-            {% endif %}
-            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab5">
-                    <b>Delivery terms</b>
-                    <br>Free delivery within 3-6 working days<br><br>
-                    <b>Refund terms</b>
-                    <br>If you are not satisfied with the product, you may return it for a refund within 30 days of receiving the order.
-            </div>
-        </div>
-    </div>
-{% endmacro %}
-
 {% macro product_box(product, show_image=True, show_description=False, class="product-box", thumbnail_size=(500,500), shop=None, supplier=None) %}
-    {% set shop_product = product.get_shop_instance(request.shop) %}
+    {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
     {% if supplier %}
         {% set product_url = url("shuup:supplier-product", supplier_pk=supplier.pk, pk=product.pk, slug=product.slug) %}
     {% else %}
         {% set product_url = url("shuup:product", pk=product.pk, slug=product.slug) %}
-        {% set shop_product = product.get_shop_instance(request.shop, allow_cache=True) %}
         {% set supplier = shop_product.get_supplier() %}
     {% endif %}
 
@@ -120,6 +48,7 @@
                     {{ product.name }}
                 </div>
                 {% if show_supplier_info %}{{ render_supplier_info(supplier) }}{% endif %}
+                {% if shop_product and shop_product.available_until %}{{ render_availability_info(shop_product) }}{% endif %}
                 {% if show_description and product.description %}
                     <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
                 {% endif %}

@@ -7,45 +7,35 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core import cache
+from shuup.front.themes import BaseThemeFieldsMixin
 from shuup.utils.djangoenv import has_installed
 from shuup.xtheme import Theme
 
 
-class ShuupMegastoreTheme(Theme):
+class ShuupMegastoreTheme(BaseThemeFieldsMixin, Theme):
     identifier = "shuup_megastore_theme"
     name = _("Shuup Megastore Theme")
     author = "Shuup Team"
     template_dir = "shuup_megastore_theme/"
 
+    _theme_fields = [
+        ("group_items_by_supplier", forms.BooleanField(
+            required=False, initial=False,
+            label=_("Group items by supplier"),
+            help_text=_("Group items by the supplier in basket and order")
+        ))
+    ]
+
     @property
     def fields(self):
-        fields = [
-            ("hide_prices", forms.BooleanField(required=False, initial=False, label=_("Hide prices"))),
-            ("catalog_mode", forms.BooleanField(required=False, initial=False, label=_("Set shop in catalog mode"))),
-            (
-                "show_supplier_info",
-                forms.BooleanField(
-                    required=False, initial=False, label=_("Show supplier info"),
-                    help_text=_("Show supplier name in product-box, product-detail, basket- and order-lines"))
-            ),
-            (
-                "group_items_by_supplier",
-                forms.BooleanField(
-                    required=False, initial=False,
-                    label=_("Group items by supplier"),
-                    help_text=_("Group items by the supplier in basket and order")
-                )
-            )
-        ]
-
+        fields = self._theme_fields + super(ShuupMegastoreTheme, self).get_base_fields()
         if has_installed("shuup_product_reviews"):
             fields.extend([
                 ("show_product_review", forms.BooleanField(
                     required=False, initial=True,
-                    label=_("Show product reviews rating in product card and review comments in product detail.")
+                    label=_("Show product reviews rating in product card.")
                 ))
             ])
-
         return fields
 
     def get_view(self, view_name):

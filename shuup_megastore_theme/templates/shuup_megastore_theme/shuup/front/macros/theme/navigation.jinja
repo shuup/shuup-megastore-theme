@@ -1,6 +1,6 @@
 {%- from "shuup_megastore_theme/macros/basket.jinja" import render_partial_basket_supplier_info -%}
 
-{% macro render_navigation() %}
+{% macro render_navigation(show_quick_login=True) %}
     <nav class="navbar navbar-static-top site-nav" role="navigation">
         <div class="top-nav">
             <div class="container">
@@ -11,7 +11,7 @@
                     </li>
                 </ul>
                 <ul class="nav-right">
-                    {{ render_info_dropdown() }}
+                    {{ render_info_dropdown(show_quick_login) }}
                     {{ render_language_changer() }}
                     {{ render_basket_partial(request.basket, id="navigation-basket-partial") }}
                 </ul>

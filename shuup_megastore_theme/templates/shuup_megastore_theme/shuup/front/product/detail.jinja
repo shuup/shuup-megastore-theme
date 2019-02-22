@@ -62,30 +62,34 @@
             </div>
         </div>
 
-        {{ product_macros.render_product_information(product) }}
+        {{ product_macros.render_product_detail_top_placeholder() }}
 
-        {% if package_children %}
-            <section class="carousel-section">
-                <div class="title-bar light">
-                    <h2>{% trans %}Includes these products{% endtrans %}</h2>
-                </div>
-                <div class="product-carousel owl-carousel five">
-                    {% for child in package_children %}
-                        {{ product_macros.product_box(child, show_description=False) }}
-                    {% endfor %}
-                </div>
-            </section>
-        {% elif package_parents %}
-            <section class="carousel-section">
-                <div class="title-bar light">
-                    <h2>{% trans %}Is also available in{% endtrans %}</h2>
-                </div>
-                <div class="product-carousel owl-carousel five">
-                    {% for parent in package_parents %}
-                        {{ product_macros.product_box(parent, show_description=False) }}
-                    {% endfor %}
-                </div>
-            </section>
+        {% if xtheme.get("show_product_detail_section", True) %}
+            {{ product_macros.render_product_information(product, render_title=False) }}
+
+            {% if package_children %}
+                <section class="carousel-section">
+                    <div class="title-bar light">
+                        <h2>{% trans %}Includes these products{% endtrans %}</h2>
+                    </div>
+                    <div class="product-carousel owl-carousel five">
+                        {% for child in package_children %}
+                            {{ product_macros.product_box(child, show_description=False) }}
+                        {% endfor %}
+                    </div>
+                </section>
+            {% elif package_parents %}
+                <section class="carousel-section">
+                    <div class="title-bar light">
+                        <h2>{% trans %}Is also available in{% endtrans %}</h2>
+                    </div>
+                    <div class="product-carousel owl-carousel five">
+                        {% for parent in package_parents %}
+                            {{ product_macros.product_box(parent, show_description=False) }}
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
         {% endif %}
 
         {{ product_macros.render_product_placeholder_section() }}
