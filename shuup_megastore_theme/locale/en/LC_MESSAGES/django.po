@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-12 23:15+0000\n"
+"POT-Creation-Date: 2019-03-13 16:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,8 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"Products supplied by <strong class=\"supplier-name\">{supplier_name}</strong>"
+"Supplied by <a href=\"{supplier_url}\"><strong class=\"supplier-name"
+"\">{supplier_name}</strong></a>"
 msgstr ""
 
 #, python-brace-format
