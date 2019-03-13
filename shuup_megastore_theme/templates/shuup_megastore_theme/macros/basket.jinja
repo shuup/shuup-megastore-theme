@@ -1,11 +1,18 @@
-{% macro render_basket_supplier_info(supplier) %}
+{% macro _render_supplier_info(supplier) %}
+    {% set supplier_url = shuup.urls.model_url(supplier, raise_when_not_found=False) %}
     <div class="supplier-info">
-        {{ _('Products supplied by <strong class="supplier-name">{supplier_name}</strong>').format(supplier_name=supplier.name) }}
+        {% if supplier_url %}
+            {{ _('Supplied by <a href="{supplier_url}"><strong class="supplier-name">{supplier_name}</strong></a>').format(supplier_url=supplier_url, supplier_name=supplier.name) }}
+        {% else %}
+            {{ _('Supplied by <strong class="supplier-name">{supplier_name}</strong>').format(supplier_name=supplier.name) }}
+        {% endif %}
     </div>
 {% endmacro %}
 
+{% macro render_basket_supplier_info(supplier) %}
+    {{ _render_supplier_info(supplier) }}
+{% endmacro %}
+
 {% macro render_partial_basket_supplier_info(supplier) %}
-    <div class="supplier-info">
-        {{ _('Supplied by <strong class="supplier-name">{supplier_name}</strong>').format(supplier_name=supplier.name) }}
-    </div>
+    {{ _render_supplier_info(supplier) }}
 {% endmacro %}
