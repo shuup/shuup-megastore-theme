@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Jiechao Li <jiechao.li@sesamechat.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-12 23:15+0000\n"
+"PO-Revision-Date: 2019-03-12 23:16+0000\n"
+"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, python-brace-format
+msgid ""
+"Products supplied by <strong class=\"supplier-"
+"name\">{supplier_name}</strong>"
+msgstr "<strong class=\"supplier-name\">{supplier_name}</strong>提供的产品"
+
+#, python-brace-format
+msgid "Supplied by <strong class=\"supplier-name\">{supplier_name}</strong>"
+msgstr "由<strong class=\"supplier-name\">{supplier_name}</strong>提供"
+
+msgid "Categories"
+msgstr "类别"
+
+msgid "Base"
+msgstr "基础"
+
+msgid "Scroll to top"
+msgstr "滚动至顶部"
+
+msgid "My Dashboard"
+msgstr "我的控制面板"
+
+msgid "Dashboard"
+msgstr "控制面板"
+
+msgid "Home"
+msgstr "主页"
+
+msgid "Product added to cart"
+msgstr "增加产品到购物车"
+
+msgid "There was an error adding the product to the shopping cart"
+msgstr "将产品添加到购物车时出错。"
+
+msgid "Remove product from basket"
+msgstr "从购物篮中删除产品"
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Total"
+msgstr "总共"
+
+msgid "Update quantities"
+msgstr "更新量"
+
+msgid ""
+"The following items are not currently available (or are not available in the"
+" desired quantity) and cannot be included in your order."
+msgstr "以下项目目前不可用(或无法按所需数量提供)，也不能包括在您的订单中。"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Page"
+msgstr "页面"
+
+msgid "Next"
+msgstr "下一页"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Cart"
+msgstr "购物车"
+
+msgid "Items"
+msgstr "物品"
+
+msgid "View cart"
+msgstr "查看购物车"
+
+msgid "Your shopping cart is empty."
+msgstr "您的购物车是空的。"
+
+msgid "excl. tax"
+msgstr "不包含。税"
+
+msgid "Products ordered"
+msgstr "订购产品"
+
+msgid "Unit Price"
+msgstr "单价"
+
+msgid "Preview"
+msgstr "预演"
+
+msgid "Add to cart"
+msgstr "增加到购物车"
+
+msgid "Products"
+msgstr "产品"
+
+msgid "List Price"
+msgstr "价格表"
+
+msgid "Discounted Price"
+msgstr "折扣价"
+
+msgid "You Save"
+msgstr "你保存"
+
+msgid "Includes these products"
+msgstr "包括这些产品"
+
+msgid "Is also available in"
+msgstr "也可在"
+
+msgid "Search for products"
+msgstr "搜索产品"
+
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr "没有为“<strong>%(query)s</strong>”找到结果。"
+
+msgid ""
+"Limiting results to first 150 products. Refine search terms for better "
+"results."
+msgstr "将结果限制在前150种产品上。改进搜索条件，以获得更好的结果。"
+
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "%(n)s为“<strong>%(query)s</strong>”的结果。"
+
+msgid "Shuup Megastore Theme"
+msgstr "Shuup 超大卖场主题"
+
+msgid "Group items by supplier"
+msgstr "按供应商分类的项目"
+
+msgid "Group items by the supplier in basket and order"
+msgstr "由供应商按购物篮和定单对项目进行分组。"
+
+msgid "Show product reviews rating in product card."
+msgstr "在产品卡中显示产品评审等级。"
