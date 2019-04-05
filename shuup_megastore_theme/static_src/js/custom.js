@@ -6,7 +6,11 @@ function toggleMegaMenu() {
     var elem = $(this).find("div.mega-menu-container");
     const posY = $(this).position().top - 70;
     elem.css("top", posY);
-    elem.toggleClass("open");
+
+    // make everything hidden
+    $(".mega-menu-container").removeClass("open");
+    elem.addClass("open");  // show only this element
+
     if (elem.hasClass("open")) {
         const identifier = ".mega-menu-container >ul";
         const elementWidth = elem.children(identifier).first().width();
