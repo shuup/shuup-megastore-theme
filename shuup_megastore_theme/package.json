@@ -14,7 +14,7 @@
   "license": "Proprietary",
   "private": true,
   "dependencies": {
-    "autoprefixer": "^8.6.4",
+    "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.0",
@@ -25,11 +25,11 @@
     "less": "^3.9.0",
     "merge-stream": "^1.0.1",
     "owl.carousel": "^2.3.4",
-    "parcel-bundler": "^1.10.3",
+    "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.1.0",
     "sass": "^1.15.1",
-    "shuup-static-build-tools": "^1.0.2",
-    "simplelightbox": "^1.13.0"
+    "shuup-static-build-tools": "^1.0.3",
+    "simplelightbox": "^1.17.3"
   },
   "devDependencies": {
     "sass": "^1.16.0-dev"
