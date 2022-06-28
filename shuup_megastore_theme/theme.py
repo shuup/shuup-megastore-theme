@@ -10,7 +10,7 @@ from collections import defaultdict
 
 from django import forms
 from django.conf import settings
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
 
 from shuup.core import cache
@@ -66,7 +66,7 @@ class ShuupMegastoreTheme(BaseThemeFieldsMixin, Theme):
         from shuup.simple_cms.models import Page
 
         for page in Page.objects.visible().filter(**query_kwargs):
-            yield {"url": "/%s" % page.url, "text": force_text(page)}
+            yield {"url": "/%s" % page.url, "text": force_str(page)}
 
     def get_cms_navigation_links(self):
         return self._format_cms_links(visible_in_menu=True)
