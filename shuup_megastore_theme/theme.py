@@ -11,7 +11,7 @@ from collections import defaultdict
 from django import forms
 from django.conf import settings
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core import cache
 from shuup.front.themes import BaseThemeFieldsMixin
@@ -26,33 +26,45 @@ class ShuupMegastoreTheme(BaseThemeFieldsMixin, Theme):
     template_dir = "shuup_megastore_theme/"
 
     _theme_fields = [
-        ("group_items_by_supplier", forms.BooleanField(
-            required=False, initial=False,
-            label=_("Group items by supplier"),
-            help_text=_("Group items by the supplier in basket and order")
-        ))
+        (
+            "group_items_by_supplier",
+            forms.BooleanField(
+                required=False,
+                initial=False,
+                label=_("Group items by supplier"),
+                help_text=_("Group items by the supplier in basket and order"),
+            ),
+        )
     ]
 
     @property
     def fields(self):
         fields = self._theme_fields + super(ShuupMegastoreTheme, self).get_base_fields()
         if has_installed("shuup_product_reviews"):
-            fields.extend([
-                ("show_product_review", forms.BooleanField(
-                    required=False, initial=True,
-                    label=_("Show product reviews rating in product card.")
-                ))
-            ])
+            fields.extend(
+                [
+                    (
+                        "show_product_review",
+                        forms.BooleanField(
+                            required=False,
+                            initial=True,
+                            label=_("Show product reviews rating in product card."),
+                        ),
+                    )
+                ]
+            )
         return fields
 
     def get_view(self, view_name):
         import shuup_megastore_theme.views as views
+
         return getattr(views, view_name, None)
 
     def _format_cms_links(self, **query_kwargs):
         if "shuup.simple_cms" not in settings.INSTALLED_APPS:
             return
         from shuup.simple_cms.models import Page
+
         for page in Page.objects.visible().filter(**query_kwargs):
             yield {"url": "/%s" % page.url, "text": force_text(page)}
 
@@ -70,6 +82,7 @@ class ShuupMegastoreTheme(BaseThemeFieldsMixin, Theme):
             return cached_rating
 
         from shuup_product_reviews.utils import render_product_review_ratings
+
         rendered = render_product_review_ratings(product)
 
         if rendered:
